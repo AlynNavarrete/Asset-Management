@@ -35,6 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
     { label: 'Usuarios', icon: 'group', href: '/Usuarios/code.html', match: '/usuarios/' }
   ];
 
+  // Warm the static pages while the browser is idle so changing modules does
+  // not wait for the next HTML document to start downloading.
+  const prefetchMainRoutes = () => items.forEach(({ href }) => {
+    if (href === window.location.pathname) return;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = href;
+    link.as = 'document';
+    document.head.appendChild(link);
+  });
+  if ('requestIdleCallback' in window) window.requestIdleCallback(prefetchMainRoutes, { timeout: 1800 });
+  else window.setTimeout(prefetchMainRoutes, 600);
+
   const matches = (rule) => (Array.isArray(rule) ? rule : [rule]).some((part) => currentPath.includes(part));
   const menu = items.map((item) => `
     <a class="rp-nav-item ${matches(item.match) ? 'is-active' : ''}" href="${item.href}" title="${item.label}">
