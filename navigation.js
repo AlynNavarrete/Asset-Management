@@ -512,4 +512,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setTimeout(fitPageToViewport, 120);
     window.addEventListener('resize', fitPageToViewport);
   }
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    const destination = new URL(link.href, window.location.href);
+    if (destination.origin !== window.location.origin || destination.href === window.location.href || destination.hash) return;
+    document.documentElement.classList.add('rp-app-loading');
+  });
+  window.rpRevealApp?.();
 });
