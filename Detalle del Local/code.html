@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle del Local - Asset Management Comercial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9fa",
+                        "inverse-primary": "#b3c5ff",
+                        "on-secondary-fixed": "#091c34",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#bcc8d5",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#d8e4f2",
+                        "outline-variant": "#c2c6d8",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "tertiary": "#4f5a66",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-bright": "#f8f9fa",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "secondary": "#4f5f7b",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-primary-fixed": "#001849",
+                        "surface-container": "#edeeef",
+                        "on-secondary-container": "#51617d",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#f4f8ff",
+                        "on-primary-container": "#f8f7ff",
+                        "on-surface-variant": "#424656",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-fixed-variant": "#3d4853",
+                        "background": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "outline": "#727687",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#374762",
+                        "secondary-container": "#ccdefe",
+                        "secondary-fixed-dim": "#b6c7e7",
+                        "surface-tint": "#0054d6",
+                        "on-surface": "#191c1d",
+                        "on-tertiary-fixed": "#111d26",
+                        "primary-container": "#0066ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "primary": "#0050cb",
+                        "primary-fixed": "#dae1ff",
+                        "on-primary-fixed-variant": "#003fa4",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary-fixed": "#d5e3ff",
+                        "tertiary-container": "#67737f",
+                        "surface-dim": "#d9dadb",
+                        "status-active": "#0a7d33",
+                        "status-active-bg": "#e6f4ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-page": "32px",
+                        "sidebar-collapsed": "72px",
+                        "sidebar-width": "260px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    },
+                    "boxShadow": {
+                        "level-1": "0px 4px 12px rgba(0, 0, 0, 0.04)",
+                        "level-2": "0px 8px 24px rgba(0, 0, 0, 0.08)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md flex antialiased">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-sidebar-width bg-on-secondary-fixed dark:bg-on-background shadow-sm z-50 flex flex-col py-6">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-surface-bright">Asset Management Comercial</h1>
+<p class="text-surface-variant text-sm mt-1">Institutional CRE Oversight</p>
+</div>
+<ul class="flex-1 space-y-1 mt-4">
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-secondary-fixed-dim text-on-secondary-fixed border-l-4 border-primary px-4 py-3 opacity-90 transition-all hover:bg-on-secondary-fixed-variant" href="#">
+<span class="material-symbols-outlined icon-filled" data-icon="location_city">location_city</span>
+<span class="font-label-md text-label-md">Estaciones</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="domain_disabled">domain_disabled</span>
+<span class="font-label-md text-label-md">Administración de Vacantes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-md text-label-md">Calendario y Alertas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Usuarios</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Configuración</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto">
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Cerrar sesión</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-sidebar-width flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="docked full-width top-0 sticky z-40 bg-surface dark:bg-surface-container border-b border-outline-variant flat no shadows h-16 px-margin-page flex justify-between items-center">
+<div class="flex-1 flex items-center">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Buscar..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<img alt="Executive User Portrait" class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-highest" data-alt="A professional headshot of an executive user in a modern corporate setting, neutral background, soft high-key lighting, tailored suit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaFVBwIrL_AslniCe_5sb2iOxNPL-VHdhuHyAQtyYkwoykXLR9clZyRPTbkXI846i5hj1ztT0gxK8y4ECTOnIN6HC1_SVvIBbp1kJbacrPK8NqA1jfhukdxkfKcxvw7HqHDZY-UZfsnlIB82Z1q8UaNyIi8U7x5chT_uD7EjHnCsIHahfGb1QlikD6tEk3uJYODRt8YCQfc5IwRM7Q4C6bLLqw1E9UwysETXjG7S1DN1xD-LVGaGIkoA"/>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<main class="flex-1 p-margin-page flex flex-col gap-gutter">
+<!-- Breadcrumb & Actions -->
+<div class="flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant font-body-md text-sm mb-2">
+<a class="hover:text-primary transition-colors" href="#">Estaciones</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Estación Las Habas</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-medium text-on-surface">Detalle del Local</span>
+</nav>
+<h2 class="font-display-lg text-display-lg text-on-background">OXXO Victorica</h2>
+</div>
+<div class="flex gap-3">
+<button id="edit-local-button" type="button" class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+                        Editar
+                    </button>
+<button id="register-tenant-exit" type="button" class="px-4 py-2 border border-[#d99b30] rounded-lg font-label-md text-label-md text-[#9a5a00] hover:bg-[#fff3d8] transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">move_item</span>
+                        Registrar salida
+                    </button>
+<button id="generate-local-report" type="button" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md shadow-sm hover:bg-primary-fixed-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                        Generar Reporte
+                    </button>
+</div>
+</div>
+<!-- Header Card (Bento Style) -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Header Info -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-level-1 p-6 flex gap-6">
+<div class="w-48 h-48 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A bright, modern exterior shot of a commercial convenience store on a sunny day. Clean architecture, subtle shadows, highly detailed corporate real estate photography aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPtt04mDZMB5SiPkoNOD8YU1eqhaD1QgF-3dl3Hk_qAwtsYUI43kUok5xK964YUgkMZfJP-dmAGJULhM17S34AX1eSioAYV0aKD_XWkBlPv_uZWhMKSo6aKy7y6sTchvdP_-y3jp1l3CqudbCrWcCedb2ezIUieshfCPCMm5KeSyfL0W_uB9e-ZpdGuV7ZhFKnrklK6fxWyLbygkN7FABx8hU7CpfHRhizuTj75u1KXwOe0RfsDoGJ2A"/>
+</div>
+<div class="flex flex-col justify-between flex-1">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background">OXXO</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Inquilino: Cadena Comercial Oxxo, S.A. de C.V.</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-status-active-bg text-status-active font-label-md text-label-md border border-[#b7dfc9] flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-status-active"></div>
+                                    Activo
+                                </span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mb-6">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-body-md text-body-md">Giro: Conveniencia</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-surface-variant pt-4">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Superficie</p>
+<p class="font-data-mono text-data-mono text-on-background text-lg">120 m²</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Renta Actual</p>
+<p class="font-data-mono text-data-mono text-on-background text-lg">$45,000 MXN</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Cajones</p>
+<p class="font-data-mono text-data-mono text-on-background text-lg">4 Asignados</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Location Map Snippet -->
+<div id="local-map-card" role="button" tabindex="0" aria-label="Abrir ubicación del local en Google Maps" class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden relative cursor-pointer">
+<img class="w-full h-full object-cover absolute inset-0" data-alt="A stylized, high-contrast minimalist street map focusing on a commercial intersection, clean lines, corporate real estate dashboard aesthetic, light mode palette." data-location="Ciudad de México" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP-kpsJNi5LbCjISSfeCA2h4_jaGdayMNofVtFWro5tT1myDC92GWdIK-scT1Vq0KR13p_qE0yCb0Lv5QDAlvUnKp9vojC5gzeumJkptmixi7bOMMb8qJvNn-FbVmxxk8zEINf3MMEmXtsCWmU8qr-XwFjmF_7z97b4DxNc1WG3a5pXGeS5be5IbsOizLuRURqw-QoUtUMJup2S9WiguFuc9HQtUs9X2SffMoth2HKCuQqH35Zkur6KA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-white">
+<p class="font-label-md text-label-md opacity-80 uppercase">Ubicación</p>
+<p class="font-body-md text-body-md font-medium">Estación Las Habas, Local 3</p>
+</div>
+</div>
+</div>
+<!-- Bento Grid: Documents & Contract Status -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Document Management -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest rounded-xl shadow-level-1 p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="folder_open">folder_open</span>
+                            Expediente Documental
+                        </h3>
+<button id="add-local-document" type="button" class="text-primary hover:bg-primary-container/10 px-3 py-1.5 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Agregar Documento
+                        </button>
+</div>
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-surface-variant">
+<th class="p-3 font-label-md text-label-md text-on-surface-variant">Documento</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant">Última Actualización</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant text-right">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group">
+<td class="p-3 font-body-md text-body-md text-on-background font-medium">Contrato de Arrendamiento Principal</td>
+<td class="p-3 font-data-mono text-data-mono text-on-surface-variant">12/05/2022</td>
+<td class="p-3 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded" title="Ver"><span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded" title="Descargar"><span class="material-symbols-outlined text-sm" data-icon="download">download</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded" title="Reemplazar"><span class="material-symbols-outlined text-sm" data-icon="sync">sync</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group">
+<td class="p-3 font-body-md text-body-md text-on-background font-medium">Acta de Entrega Recepción</td>
+<td class="p-3 font-data-mono text-data-mono text-on-surface-variant">15/05/2022</td>
+<td class="p-3 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="download">download</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group">
+<td class="p-3 font-body-md text-body-md text-on-background font-medium">Constancia de Situación Fiscal</td>
+<td class="p-3 font-data-mono text-data-mono text-on-surface-variant">01/02/2024</td>
+<td class="p-3 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="download">download</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group">
+<td class="p-3 font-body-md text-body-md text-on-background font-medium flex items-center gap-2">
+                                        Póliza de Seguro de Responsabilidad
+                                        <span class="material-symbols-outlined text-error text-sm" data-icon="warning" title="Próxima a vencer">warning</span>
+</td>
+<td class="p-3 font-data-mono text-data-mono text-on-surface-variant">10/06/2023</td>
+<td class="p-3 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded"><span class="material-symbols-outlined text-sm" data-icon="sync">sync</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Contract Timeline & Status -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest rounded-xl shadow-level-1 p-6">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="timeline">timeline</span>
+                        Ciclo de Vida del Contrato
+                    </h3>
+<div class="relative pl-6 border-l-2 border-surface-variant space-y-6">
+<div class="relative">
+<div class="absolute -left-[31px] bg-surface-container-lowest border-2 border-primary rounded-full w-4 h-4 mt-1"></div>
+<div>
+<p class="font-label-md text-label-md text-primary mb-1">Inicio de Contrato</p>
+<p class="font-data-mono text-data-mono text-on-background">15 Mayo 2022</p>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-[31px] bg-primary rounded-full w-4 h-4 mt-1 ring-4 ring-primary-fixed"></div>
+<div class="bg-primary-container/5 rounded-lg p-3 -mt-2">
+<p class="font-label-md text-label-md text-primary mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="celebration">celebration</span>
+                                    Próximo Aniversario (Incremento INPC)
+                                </p>
+<p class="font-data-mono text-data-mono text-on-background font-bold">15 Mayo 2024</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Faltan 45 días. Requiere notificación previa.</p>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-[31px] bg-surface-container-lowest border-2 border-outline-variant rounded-full w-4 h-4 mt-1"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Alerta de Renovación</p>
+<p class="font-data-mono text-data-mono text-outline">15 Noviembre 2026</p>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-[31px] bg-surface-container-lowest border-2 border-outline-variant rounded-full w-4 h-4 mt-1"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Vencimiento del Contrato</p>
+<p class="font-data-mono text-data-mono text-outline">14 Mayo 2027</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Economic Section -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 p-6">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+                    Condiciones Económicas
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-low rounded-lg p-4">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Renta Base Mensual</p>
+<p class="font-display-lg text-display-lg text-on-background">$45,000</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">MXN (Antes de IVA)</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-4">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Mantenimiento (10%)</p>
+<p class="font-headline-md text-headline-md text-on-background mt-2">$4,500</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">MXN Mensual</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Depósito en Garantía</p>
+<p class="font-headline-md text-headline-md text-on-background mt-2">$90,000</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Equivalente a 2 meses</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-4">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Total Facturado a Inquilino</p>
+<p class="font-headline-md text-headline-md text-primary mt-2">$57,420</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">MXN (Renta + Mtto + IVA)</p>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-background uppercase mb-4">Historial de Incrementos</h4>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface border-b border-surface-variant">
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Año</th>
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Fecha de Ajuste</th>
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Índice INPC</th>
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Monto Anterior</th>
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Monto Nuevo</th>
+<th class="p-2 font-label-md text-label-md text-on-surface-variant">Aumento %</th>
+</tr>
+</thead>
+<tbody id="economic-increase-history">
+<tr class="border-b border-surface-variant">
+<td class="p-2 font-data-mono text-data-mono text-on-background">2023</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">15/05/2023</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">145.1690</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">$42,352.94</td>
+<td class="p-2 font-data-mono text-data-mono text-on-background font-medium">$45,000.00</td>
+<td class="p-2 font-data-mono text-data-mono text-primary font-medium">+6.25%</td>
+</tr>
+<tr class="border-b border-surface-variant opacity-60">
+<td class="p-2 font-data-mono text-data-mono text-on-background">2022 (Firma)</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">15/05/2022</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">-</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">-</td>
+<td class="p-2 font-data-mono text-data-mono text-on-background font-medium">$42,352.94</td>
+<td class="p-2 font-data-mono text-data-mono text-on-surface-variant">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/navigation.js?v=20260812-notifications-menu"></script>
+<link href="/tenant-exit.css?v=20260902-initial" rel="stylesheet">
+<script src="/local-detail-actions.js?v=20260902-tenant-exit"></script>
+<script src="/tenant-exit.js?v=20260902-initial"></script>
+</body></html>

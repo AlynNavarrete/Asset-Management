@@ -1,0 +1,44 @@
+/* Cabeceras continuas: el degradado pertenece a la fila completa, no a cada celda. */
+.alerts-page .expiry-table thead,
+.alerts-page .contracts-card .table-wrap thead {
+  border-radius: 14px;
+  background: linear-gradient(90deg, #0aa9df 0%, #218fd4 42%, #3974cc 100%);
+}
+
+.alerts-page .expiry-table thead tr,
+.alerts-page .contracts-card .table-wrap thead tr {
+  background: transparent !important;
+}
+
+.alerts-page .expiry-table thead th,
+.alerts-page .contracts-card .table-wrap thead th {
+  border: 0 !important;
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.alerts-page .expiry-table thead th:first-child,
+.alerts-page .contracts-card .table-wrap thead th:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+.alerts-page .expiry-table thead th:last-child,
+.alerts-page .contracts-card .table-wrap thead th:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+/* En modo noche se conserva el degradado, con tonos más profundos y legibles. */
+html.rp-dark .alerts-page .expiry-table thead,
+html.rp-dark .alerts-page .contracts-card .table-wrap thead {
+  background: linear-gradient(90deg, #087eaf 0%, #1768ad 48%, #274f9f 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(111, 196, 244, .16);
+}
+
+html.rp-dark .alerts-page .expiry-table thead tr,
+html.rp-dark .alerts-page .contracts-card .table-wrap thead tr,
+html.rp-dark .alerts-page .expiry-table thead th,
+html.rp-dark .alerts-page .contracts-card .table-wrap thead th {
+  color: #f4f9ff !important;
+  background: transparent !important;
+}

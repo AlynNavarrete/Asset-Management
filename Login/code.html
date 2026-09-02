@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Iniciar sesión - Asset Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="/login.css?v=20260807-moving-orbs">
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-brand-panel">
+      <img src="/assets/redpetroil-logo.png" alt="Redpetroil" class="login-logo">
+      <div class="login-brand-copy"><span>Asset Management</span><h1>Control comercial en un solo lugar.</h1><p>Administra estaciones, locales, contratos y alertas con información clara y oportuna.</p></div>
+      <div class="login-decoration"><i></i><i></i><i></i></div>
+    </section>
+    <section class="login-form-panel">
+      <div class="login-card">
+        <div class="login-mobile-brand"><img src="/assets/redpetroil-icon.png" alt=""><span>Asset Management</span></div>
+        <p class="login-eyebrow">Bienvenida, Alyn</p>
+        <h2>Iniciar sesión</h2>
+        <p class="login-description">Ingresa tus datos para acceder al portafolio comercial.</p>
+        <form id="login-form" novalidate>
+          <label>Nombre de usuario<div class="login-input"><span class="material-symbols-outlined">person</span><input id="login-username" name="username" type="text" autocomplete="username" placeholder="Ingresa tu usuario" value="AlynNavarrete" required></div></label>
+          <label>Contraseña<div class="login-input"><span class="material-symbols-outlined">lock</span><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" minlength="4" required><button id="toggle-password" type="button" aria-label="Mostrar contraseña"><span class="material-symbols-outlined">visibility</span></button></div></label>
+          <div class="login-options"><label class="remember"><input id="remember-session" type="checkbox" checked><span>Recordar sesión</span></label><button id="forgot-password" type="button">¿Olvidaste tu contraseña?</button></div>
+          <p id="login-error" class="login-error" role="alert" hidden></p>
+          <button class="login-submit" type="submit"><span>Entrar</span><span class="material-symbols-outlined">arrow_forward</span></button>
+        </form>
+        <p class="login-support">¿Necesitas ayuda? <button id="login-support" type="button">Contactar al administrador</button></p>
+      </div>
+    </section>
+  </main>
+  <div id="login-toast" role="status" aria-live="polite"></div>
+  <script src="/login.js?v=20260807-credentials"></script>
+</body>
+</html>

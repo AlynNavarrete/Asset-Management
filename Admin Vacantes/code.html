@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Administración de Vacantes - Asset Management Comercial</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/proposal-history.css?v=20260902-direct-resign" rel="stylesheet"/>
+<link href="/vacancies-executive.css?v=20260828-commercial-followup" rel="stylesheet"/>
+<link href="/vacancy-calculation.css?v=20260901-compact-heading" rel="stylesheet"/>
+<link href="/vacancy-rent-calculator.css?v=20260901-compact-modal" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Style Guidance -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f8f9fa",
+                    "inverse-primary": "#b3c5ff",
+                    "on-secondary-fixed": "#091c34",
+                    "on-background": "#191c1d",
+                    "tertiary-fixed-dim": "#bcc8d5",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#d8e4f2",
+                    "outline-variant": "#c2c6d8",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f3f4f5",
+                    "tertiary": "#4f5a66",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e1e3e4",
+                    "surface-bright": "#f8f9fa",
+                    "primary-fixed-dim": "#b3c5ff",
+                    "secondary": "#4f5f7b",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-primary-fixed": "#001849",
+                    "surface-container": "#edeeef",
+                    "on-secondary-container": "#51617d",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#f4f8ff",
+                    "on-primary-container": "#f8f7ff",
+                    "on-surface-variant": "#424656",
+                    "inverse-surface": "#2e3132",
+                    "on-tertiary-fixed-variant": "#3d4853",
+                    "background": "#f8f9fa",
+                    "surface-container-high": "#e7e8e9",
+                    "outline": "#727687",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed-variant": "#374762",
+                    "secondary-container": "#ccdefe",
+                    "secondary-fixed-dim": "#b6c7e7",
+                    "surface-tint": "#0054d6",
+                    "on-surface": "#191c1d",
+                    "on-tertiary-fixed": "#111d26",
+                    "primary-container": "#0066ff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "primary": "#0050cb",
+                    "primary-fixed": "#dae1ff",
+                    "on-primary-fixed-variant": "#003fa4",
+                    "inverse-on-surface": "#f0f1f2",
+                    "secondary-fixed": "#d5e3ff",
+                    "tertiary-container": "#67737f",
+                    "surface-dim": "#d9dadb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "margin-page": "32px",
+                    "sidebar-collapsed": "72px",
+                    "sidebar-width": "260px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Ambient shadows for Level 1 and Level 2 */
+        .shadow-level-1 { box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.04); }
+        .shadow-level-2 { box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08); }
+        
+        /* Table scrollbar styling */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c2c6d8; border-radius: 4px; }
+    </style>
+<link rel="stylesheet" href="/vacancy-approval-gate.css?v=20260826-approved-filter">
+</head>
+<body class="bg-background text-on-background font-body-md flex min-h-screen">
+<!-- SIDE NAV BAR (From JSON) -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-on-secondary-fixed shadow-sm flex flex-col h-full py-6 z-50">
+<!-- Brand / Header -->
+<div class="px-6 mb-8 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm font-bold">
+                    AM
+                </div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-surface-bright leading-tight">Asset Management<br/>Comercial</h1>
+</div>
+</div>
+<p class="font-label-md text-label-md text-surface-variant/70 mt-2">Institutional CRE Oversight</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1 mt-4">
+<!-- Inicio -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+<!-- Estaciones -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">location_city</span>
+<span class="font-label-md text-label-md">Estaciones</span>
+</a>
+<!-- Administración de Vacantes (ACTIVE) -->
+<a class="flex items-center gap-3 bg-secondary-fixed-dim text-on-secondary-fixed border-l-4 border-primary px-4 py-3 opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">domain_disabled</span>
+<span class="font-label-md text-label-md">Administración de Vacantes</span>
+</a>
+<!-- Calendario y Alertas -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">event_note</span>
+<span class="font-label-md text-label-md">Calendario y Alertas</span>
+</a>
+<!-- Usuarios -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-label-md text-label-md">Usuarios</span>
+</a>
+<!-- Configuración -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3 mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-md text-label-md">Configuración</span>
+</a>
+<!-- Cerrar sesión -->
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">logout</span>
+<span class="font-label-md text-label-md">Cerrar sesión</span>
+</a>
+</nav>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<div class="flex-1 ml-sidebar-width flex flex-col min-h-screen">
+<!-- TOP NAV BAR (From JSON) -->
+<header class="docked full-width top-0 sticky z-40 bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-margin-page">
+<!-- Search Bar (on_left as per JSON) -->
+<div class="flex items-center w-96 relative">
+<span class="material-symbols-outlined absolute left-3 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow bg-surface" placeholder="Buscar vacantes, locales, ciudades..." type="text"/>
+</div>
+<!-- Actions & Profile -->
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer hover:bg-surface-container-low transition-colors p-1 pr-3 rounded-full">
+<img alt="Executive User Portrait" class="w-8 h-8 rounded-full object-cover shadow-sm" data-alt="A professional corporate headshot of a commercial real estate executive. The lighting is bright and studio quality, shot on a light gray background. The individual is wearing a modern dark navy suit. The image has a clean, high-fidelity corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE7wqWYEoKaB1mzyKn63wWsfsVt4UPDHUW-us-gXC1sO4n2DT8gpoew7ahJ-u4kzpdXX30sLoBRFnHXP0mMOEQzVWn1U1KTVqLLKnZ7YfYYtGJUrAD43-ZlA_zQiSkjyD9-4Oo_jNZ2Svbc_r1D22B_6AuiyC6o9ZAJ6n5OYltaKLCjZ1FmgGJbpprddTjXhJPBJP4_UZzEfBq1h-4U7dBhczLEIju8uhM4cdH8VAvOLsIsyzkaIqtWA"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">J. Director</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-sm">expand_more</span>
+</div>
+</div>
+</header>
+<!-- PAGE CANVAS -->
+<main id="vacancies-main" class="flex-1 p-margin-page bg-surface-container-low flex flex-col gap-6 overflow-y-auto">
+<!-- Page Header & Actions -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Administración de Vacantes</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Gestión integral y análisis de espacios disponibles</p>
+</div>
+<div class="flex gap-3">
+<button id="export-vacancies-report" type="button" class="flex items-center gap-2 px-4 py-2 bg-surface border border-outline-variant text-on-surface font-label-md text-label-md rounded-lg shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Exportar Reporte
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-sm hover:bg-primary-fixed-variant transition-colors hover:shadow-md" id="btn-action-plan">
+<span class="material-symbols-outlined text-sm">assignment_add</span>
+                        Plan de Acción Masivo
+                    </button>
+</div>
+</div>
+<!-- EXECUTIVE SUMMARY CARDS (KPIs) -->
+<div id="vacancy-summary-cards" class="grid grid-cols-1 md:grid-cols-5 gap-gutter">
+<!-- Total Vacantes -->
+<button id="open-vacancies-tab" type="button" class="vacancy-total-card bg-surface-container-lowest rounded-xl p-6 shadow-level-1 relative overflow-hidden group text-left">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Total Vacantes</p>
+<h3 class="font-display-lg text-display-lg text-on-surface">42</h3>
+</div>
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined">domain_disabled</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1 text-error font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+<span>+3 vs mes anterior</span>
+</div>
+</button>
+<!-- % Vacancia -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-level-1 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">% Vacancia</p>
+<h3 class="font-display-lg text-display-lg text-on-surface">8.4%</h3>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">pie_chart</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1 text-outline font-data-mono text-data-mono">
+<span>Objetivo: &lt; 5.0%</span>
+</div>
+</div>
+<!-- Superficie Total Vacante -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-level-1 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Superficie Vacante</p>
+<h3 class="font-display-lg text-display-lg text-on-surface">12,450 <span class="text-headline-sm font-normal text-outline">m²</span></h3>
+</div>
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">straighten</span>
+</div>
+</div>
+</div>
+<!-- Renta Potencial -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-level-1 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Renta Potencial (Mensual)</p>
+<h3 class="font-display-lg text-display-lg text-primary">$4.2M</h3>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 75%"></div>
+</div>
+</div>
+<!-- Días Promedio Vacante -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-level-1 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Promedio Vacancia</p>
+<h3 class="font-display-lg text-display-lg text-on-surface">145 <span class="text-headline-sm font-normal text-outline">días</span></h3>
+</div>
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined">calendar_clock</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1 text-error font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>Crítico: &gt; 120 días</span>
+</div>
+</div>
+</div>
+<!-- VACANCY TABLE -->
+<div id="vacancies-table-card" class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden flex flex-col flex-1">
+<!-- Table Controls -->
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface text-on-surface font-label-md text-label-md flex items-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Filtros
+                        </button>
+<select class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface text-on-surface font-label-md text-label-md focus:ring-primary focus:border-primary">
+<option>Todas las Ciudades</option>
+<option>CDMX</option>
+<option>Monterrey</option>
+</select>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">
+                        Mostrando <span class="font-bold text-on-surface">1-10</span> de 42 vacantes
+                    </div>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-surface border-b border-surface-variant">
+<th class="p-3 pl-6 font-label-md text-label-md text-on-surface-variant uppercase">Local</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase">Estación</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase">Ciudad</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase">Estatus</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase text-right">Superficie (m²)</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase text-right">Renta Sugerida</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase text-center">Días Vacante</th>
+<th class="p-3 pr-6 font-label-md text-label-md text-on-surface-variant uppercase text-center">Prioridad</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="p-3 pl-6 font-data-mono font-bold text-on-surface">LC-045</td>
+<td class="p-3 text-on-surface">Plaza Central</td>
+<td class="p-3 text-on-surface-variant">CDMX</td>
+<td class="p-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-md text-[10px] uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Disponible
+                                    </span>
+</td>
+<td class="p-3 text-right font-data-mono text-on-surface">250.00</td>
+<td class="p-3 text-right font-data-mono text-on-surface">$85,000</td>
+<td class="p-3 text-center font-data-mono text-error font-bold">185</td>
+<td class="p-3 pr-6 text-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">flag</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="p-3 pl-6 font-data-mono font-bold text-on-surface">FC-102</td>
+<td class="p-3 text-on-surface">Norte Shopping</td>
+<td class="p-3 text-on-surface-variant">Monterrey</td>
+<td class="p-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-[10px] uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> En Promoción
+                                    </span>
+</td>
+<td class="p-3 text-right font-data-mono text-on-surface">120.50</td>
+<td class="p-3 text-right font-data-mono text-on-surface">$42,000</td>
+<td class="p-3 text-center font-data-mono text-on-surface-variant">45</td>
+<td class="p-3 pr-6 text-center">
+<span class="material-symbols-outlined text-outline-variant">flag</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="p-3 pl-6 font-data-mono font-bold text-on-surface">IS-003</td>
+<td class="p-3 text-on-surface">Sur Terminal</td>
+<td class="p-3 text-on-surface-variant">Guadalajara</td>
+<td class="p-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-md text-[10px] uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Con Prospecto
+                                    </span>
+</td>
+<td class="p-3 text-right font-data-mono text-on-surface">450.00</td>
+<td class="p-3 text-right font-data-mono text-on-surface">$150,000</td>
+<td class="p-3 text-center font-data-mono text-on-surface-variant">92</td>
+<td class="p-3 pr-6 text-center">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">flag</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- MODAL: PLAN DE ACCIÓN (Hidden by default) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-background/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300" id="action-plan-modal">
+<div class="bg-surface-container-lowest rounded-xl shadow-level-2 w-full max-w-2xl max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300" id="action-plan-content">
+<!-- Modal Header -->
+<div class="p-6 border-b border-surface-variant flex justify-between items-center bg-surface-bright rounded-t-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Plan de Acción de Comercialización</h3>
+<p id="action-plan-subtitle" class="font-body-md text-body-md text-on-surface-variant">Acciones priorizadas según meses vacantes, renta y estatus</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low p-2 rounded-full transition-colors" id="close-modal-btn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body: Suggestions & Checklist -->
+<div id="action-plan-body" class="p-6 overflow-y-auto flex-1 flex flex-col gap-6">
+<!-- Suggestions Bento Box -->
+<div>
+<h4 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-3">Sugerencias Automáticas</h4>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<button class="bg-surface border border-outline-variant rounded-lg p-4 flex flex-col gap-2 hover:border-primary hover:bg-primary-fixed hover:text-on-primary-fixed text-left transition-all group">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed">photo_camera</span>
+<span class="font-label-md text-label-md font-bold">Actualizar Fotos</span>
+<span class="font-body-md text-[12px] text-on-surface-variant group-hover:text-on-primary-fixed-variant">Últimas fotos hace 6 meses.</span>
+</button>
+<button class="bg-surface border border-outline-variant rounded-lg p-4 flex flex-col gap-2 hover:border-primary hover:bg-primary-fixed hover:text-on-primary-fixed text-left transition-all group">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed">public</span>
+<span class="font-label-md text-label-md font-bold">Publicar en Portales</span>
+<span class="font-body-md text-[12px] text-on-surface-variant group-hover:text-on-primary-fixed-variant">Sincronizar con LoopNet.</span>
+</button>
+<button class="bg-surface border border-outline-variant rounded-lg p-4 flex flex-col gap-2 hover:border-primary hover:bg-primary-fixed hover:text-on-primary-fixed text-left transition-all group">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed">price_change</span>
+<span class="font-label-md text-label-md font-bold">Revisar Precio</span>
+<span class="font-body-md text-[12px] text-on-surface-variant group-hover:text-on-primary-fixed-variant">10% arriba del mercado.</span>
+</button>
+</div>
+</div>
+<!-- Checklist -->
+<div>
+<h4 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-3">Checklist de Acciones (Local LC-045)</h4>
+<div class="border border-surface-variant rounded-lg overflow-hidden bg-surface">
+<!-- Task 1 -->
+<div class="p-4 border-b border-surface-variant flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface line-through text-outline">Instalar lona de "Se Renta"</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-[11px]">
+<img alt="Avatar" class="w-6 h-6 rounded-full bg-outline-variant" data-alt="A small circular avatar placeholder image. Corporate style, clean white background, showing a generic placeholder icon or initials for a team member in a dashboard view." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdXYqAtUT2hhcKzsI7R_QqTYjYwEu_1OakAe0jDUaKj3zOZo4h8c4HmLZTYUb7FCtR-61F9FyOcBXgryE7JlKcueCZ_Wnlo0Q5W_OV9Y1EjMCf_yCCXTs4SGtQLqGr0IZrKcpLy4RcvQXQP0jW20LQAFFkxOVQMjs0CZXG15hlDuo0--4YGD-zLorwCCfCRxJ9DHitDdCE0d5ewf1IEvVbC-Bc4ZsVh10H57Qp3Q31dKjXbEGa2xyOfg"/>
+                                    Op. Manager
+                                </div>
+<span class="font-data-mono text-xs text-on-surface-variant">12 Oct 2023</span>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="p-4 border-b border-surface-variant flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface font-medium">Contratar fotógrafo profesional</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-[11px] bg-secondary-container text-on-secondary-container px-2 py-1 rounded">
+                                    Asignar responsable
+                                </div>
+<span class="font-data-mono text-xs text-error font-bold">Para Hoy</span>
+</div>
+</div>
+<!-- Add Task Input -->
+<div class="p-3 bg-surface-container-lowest flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">add</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline p-0" placeholder="Agregar nueva acción..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 border-t border-surface-variant flex justify-end gap-3 bg-surface-bright rounded-b-xl">
+<button class="px-5 py-2 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors" id="cancel-modal-btn">
+                    Cancelar
+                </button>
+<button id="save-action-plan" type="button" class="px-5 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-fixed-variant transition-colors shadow-sm">
+                    Guardar Plan de Acción
+                </button>
+</div>
+</div>
+</div>
+<!-- Simple Script for Modal Interaction -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('action-plan-modal');
+            const modalContent = document.getElementById('action-plan-content');
+            const btnOpen = document.getElementById('btn-action-plan');
+            const btnClose = document.getElementById('close-modal-btn');
+            const btnCancel = document.getElementById('cancel-modal-btn');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                // Trigger reflow
+                void modal.offsetWidth;
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }
+
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            btnOpen.addEventListener('click', openModal);
+            btnClose.addEventListener('click', closeModal);
+            btnCancel.addEventListener('click', closeModal);
+            
+            // Close on backdrop click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+<script src="/navigation.js?v=20260820-market-intelligence"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="/vacancies.js?v=20260902-tenant-exit"></script>
+<script src="/vacancy-rent-calculator.js?v=20260901-report"></script>
+<script src="/proposal-resign.js?v=20260902-index-fix"></script>
+</body></html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=/Admin%20Vacantes/code.html?view=calculation">
+  <title>Cálculo de Vacantes - Asset Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="/vacancy-calculation.css?v=20260831-initial">
+</head>
+<body class="vacancy-calculation-page">
+  <noscript><p><a href="/Admin%20Vacantes/code.html?view=calculation">Abrir Cálculo de Vacantes en Administración de Vacantes</a></p></noscript>
+  <main class="vacancy-calculation-shell">
+    <header class="vacancy-calculation-heading"><div><small>ANÁLISIS DE RENTAS</small><h1>Cálculo de Vacantes</h1><p>Consulta los locales vacantes y prepara el cálculo de su renta sugerida.</p></div><span><b id="vacancy-calculation-total">42</b> locales</span></header>
+    <section class="vacancy-calculation-card">
+      <div class="vacancy-calculation-toolbar">
+        <label><span class="material-symbols-outlined">search</span><input id="vacancy-calculation-search" type="search" placeholder="Buscar local, estación o municipio..."></label>
+        <select id="vacancy-calculation-city" aria-label="Filtrar por municipio"><option value="">Todos los municipios</option></select>
+        <select id="vacancy-calculation-status" aria-label="Filtrar por estatus"><option value="">Todos los estatus</option><option>Disponible</option><option>En promoción</option><option>Con prospecto</option></select>
+        <strong id="vacancy-calculation-count"></strong>
+      </div>
+      <div class="vacancy-calculation-table-wrap"><table><thead><tr><th>Local</th><th>Estación</th><th>Municipio</th><th>Estatus</th><th>Superficie</th><th>Renta de referencia</th><th>Renta sugerida</th><th>Cálculo</th></tr></thead><tbody id="vacancy-calculation-body"></tbody></table><div id="vacancy-calculation-empty" hidden><span class="material-symbols-outlined">search_off</span><strong>No se encontraron locales</strong></div></div>
+    </section>
+  </main>
+  <div id="vacancy-calculation-toast" role="status"></div>
+  <script src="/navigation.js?v=20260831-vacancy-calculation"></script>
+  <script src="/vacancy-calculation.js?v=20260831-initial"></script>
+</body>
+</html>

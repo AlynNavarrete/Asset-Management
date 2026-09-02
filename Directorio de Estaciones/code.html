@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Estaciones - Asset Management Comercial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "surface": "#f8f9fa",
+                            "inverse-primary": "#b3c5ff",
+                            "on-secondary-fixed": "#091c34",
+                            "on-background": "#191c1d",
+                            "tertiary-fixed-dim": "#bcc8d5",
+                            "error-container": "#ffdad6",
+                            "surface-container-lowest": "#ffffff",
+                            "tertiary-fixed": "#d8e4f2",
+                            "outline-variant": "#c2c6d8",
+                            "on-primary": "#ffffff",
+                            "surface-container-low": "#f3f4f5",
+                            "tertiary": "#4f5a66",
+                            "on-secondary": "#ffffff",
+                            "surface-variant": "#e1e3e4",
+                            "surface-bright": "#f8f9fa",
+                            "primary-fixed-dim": "#b3c5ff",
+                            "secondary": "#4f5f7b",
+                            "surface-container-highest": "#e1e3e4",
+                            "on-primary-fixed": "#001849",
+                            "surface-container": "#edeeef",
+                            "on-secondary-container": "#51617d",
+                            "on-tertiary": "#ffffff",
+                            "on-tertiary-container": "#f4f8ff",
+                            "on-primary-container": "#f8f7ff",
+                            "on-surface-variant": "#424656",
+                            "inverse-surface": "#2e3132",
+                            "on-tertiary-fixed-variant": "#3d4853",
+                            "background": "#f8f9fa",
+                            "surface-container-high": "#e7e8e9",
+                            "outline": "#727687",
+                            "on-error": "#ffffff",
+                            "on-secondary-fixed-variant": "#374762",
+                            "secondary-container": "#ccdefe",
+                            "secondary-fixed-dim": "#b6c7e7",
+                            "surface-tint": "#0054d6",
+                            "on-surface": "#191c1d",
+                            "on-tertiary-fixed": "#111d26",
+                            "primary-container": "#0066ff",
+                            "error": "#ba1a1a",
+                            "on-error-container": "#93000a",
+                            "primary": "#0050cb",
+                            "primary-fixed": "#dae1ff",
+                            "on-primary-fixed-variant": "#003fa4",
+                            "inverse-on-surface": "#f0f1f2",
+                            "secondary-fixed": "#d5e3ff",
+                            "tertiary-container": "#67737f",
+                            "surface-dim": "#d9dadb",
+                            "status-green": "#10B981",
+                            "status-blue": "#3B82F6",
+                            "status-yellow": "#F59E0B",
+                            "status-green-light": "#D1FAE5",
+                            "status-blue-light": "#DBEAFE",
+                            "status-yellow-light": "#FEF3C7",
+                            "status-green-dark": "#065F46",
+                            "status-blue-dark": "#1E40AF",
+                            "status-yellow-dark": "#92400E"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "base": "4px",
+                            "margin-page": "32px",
+                            "sidebar-collapsed": "72px",
+                            "sidebar-width": "260px",
+                            "gutter": "24px"
+                    },
+                    "fontFamily": {
+                            "body-lg": ["Inter"],
+                            "headline-md": ["Inter"],
+                            "data-mono": ["Inter"],
+                            "body-md": ["Inter"],
+                            "headline-sm": ["Inter"],
+                            "label-md": ["Inter"],
+                            "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                            "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                            "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    },
+                    boxShadow: {
+                        'level-1': '0 4px 12px rgba(0, 0, 0, 0.04)',
+                        'level-2': '0 8px 24px rgba(0, 0, 0, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<link href="/former-tenants.css?v=20260902-dark-mode" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-sidebar-width bg-on-secondary-fixed shadow-sm hidden md:flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-surface-bright">Asset Management Comercial</h1>
+<p class="font-label-md text-label-md text-tertiary-fixed-dim mt-1">Institutional CRE Oversight</p>
+</div>
+<ul class="flex-1 flex flex-col gap-1 w-full">
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-secondary-fixed-dim text-on-secondary-fixed border-l-4 border-primary px-4 py-3 opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="location_city" style="font-variation-settings: 'FILL' 1;">location_city</span>
+<span class="font-label-md text-label-md">Estaciones</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="domain_disabled">domain_disabled</span>
+<span class="font-label-md text-label-md">Administración de Vacantes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-md text-label-md">Calendario y Alertas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Usuarios</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Configuración</span>
+</a>
+</li>
+</ul>
+<div class="px-4 mt-auto">
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright px-4 py-3 hover:bg-on-secondary-fixed-variant transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Cerrar sesión</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 md:ml-sidebar-width flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-margin-page docked full-width top-0 sticky z-40 border-b border-outline-variant bg-surface flat no shadows">
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 w-64 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="md:hidden font-headline-md text-headline-md font-bold text-primary">AMC</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Executive User Portrait" class="w-full h-full object-cover" data-alt="A professional headshot of an executive user in a modern corporate setting, natural lighting, high resolution, corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4VZodkgEJbVG69UsGUx42JFwNWdg8AaBdo4-a0hV8jvYQryg0MHg5dfsiQM4Pv6qKPEYDiulLjLOb4YOPeD-6ZRyeRtsC2tStNY31ZnLdqyXSm42tmNSpQPE37j0eSGNg9_Ksxg3Bk3Zur7X5Q5yh-hU1vn5_L97ulsVVqHjBC5d5d4-T3l20Q10kC1jlRv38EB4YAp8CWfcT7WdjVNK8htxFevbA7hpuyx8ERnPz0gqalAT-cmDIig"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-margin-page flex flex-col gap-gutter">
+<!-- Page Header & Filters -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-2">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Directorio de Estaciones</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Vista general de activos de servicio y ocupación comercial.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex bg-surface-container-low rounded-lg p-1 border border-outline-variant">
+<button id="stations-grid-view" type="button" aria-pressed="true" class="px-4 py-1.5 bg-surface text-primary rounded shadow-sm font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+                            Tarjetas
+                        </button>
+<button id="stations-table-view" type="button" aria-pressed="false" class="px-4 py-1.5 text-on-surface-variant hover:text-on-surface rounded font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="table_rows">table_rows</span>
+                            Tabla
+                        </button>
+</div>
+</div>
+</div>
+<!-- Advanced Filters -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-level-1 border border-outline-variant/30 flex flex-wrap gap-4 items-center">
+<div class="relative flex-1 min-w-[200px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input id="station-search" class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Buscar estación por nombre o ciudad..." type="text"/>
+</div>
+<div class="relative min-w-[160px]">
+<select id="station-city-filter" class="w-full appearance-none pl-4 pr-10 py-2 bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+<option value="">Ciudad: Todas</option>
+<option value="mazatlan">Mazatlán</option>
+<option value="culiacán">Culiacán</option>
+<option value="guasave">Guasave</option>
+<option value="mocorito">Mocorito</option>
+<option value="concordia">Concordia</option>
+<option value="rosario">Rosario</option>
+<option value="escuinapa">Escuinapa</option>
+<option value="hermosillo, sonora">Hermosillo, Sonora</option>
+<option value="tlaquepaque, jalisco">Tlaquepaque, Jalisco</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<div class="relative min-w-[160px]">
+<select id="station-brand-filter" class="w-full appearance-none pl-4 pr-10 py-2 bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+<option value="">Marca: Todas</option>
+<option value="tesoro">TESORO</option>
+<option value="pemex">PEMEX</option>
+<option value="red petroil">RED PETROIL</option>
+<option value="arco">ARCO</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<div class="relative min-w-[180px]">
+<select class="w-full appearance-none pl-4 pr-10 py-2 bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+<option value="">Disponibilidad: Cualquiera</option>
+<option value="disponible">Con locales disponibles</option>
+<option value="lleno">Lleno</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Bento Grid - Stations -->
+<div data-stations-grid class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter">
+<!-- Card 1: Verde (Lleno) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden border border-outline-variant/30 flex flex-col group hover:border-primary/50 transition-colors">
+<div class="h-48 relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A modern, high-end gas station and commercial plaza complex in a sunny coastal city environment, bright daylight, architectural photography, corporate modern style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBq-Tw1cE_7tVtbpT0eVpHE9GeKt7diR0OzMCEAkSWJx3hRaiiJA6Fl2T7uvm5Cw_UJqBPrhb_WELyotgR-IuPiOc4MsZBrJTX2KXIPBVj8UiDS9lRKLQu5Vq0rcjPRUGLKURDjqXJgZ-NrxII8wLPYN8Kut_CGb_GPse1SS0iqwRepb_NfbDhs-_U0v5zqhTpSfeTnbK3-4oSZ2dg9vhJSJy8KZ2rW2563Ygoc6SQuslmaLbgWKNNB7Q')"></div>
+<div class="absolute top-3 right-3 px-2 py-1 rounded bg-status-green-light text-status-green-dark border border-status-green/20 flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md">Lleno</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">La Marina, Mazatlán</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface-variant rounded text-[11px] font-semibold tracking-wide uppercase border border-outline-variant/50">Pemex</span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                                        Sinaloa, MX
+                                    </span>
+</div>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-3 gap-2 pt-4 border-t border-outline-variant/30">
+<div class="text-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">12</p>
+</div>
+<div class="text-center border-x border-outline-variant/30">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Rentados</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">12</p>
+</div>
+<div class="text-center">
+<p class="font-label-md text-label-md text-status-green-dark mb-1">Disp.</p>
+<p class="font-data-mono text-data-mono text-status-green-dark font-bold">0</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Azul (Disponibles) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden border border-outline-variant/30 flex flex-col group hover:border-primary/50 transition-colors">
+<div class="h-48 relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A clean, contemporary commercial service station complex with modern retail storefronts, evening twilight lighting, high-end commercial real estate photography, corporate modern aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUb187nGt-6fhwxueB0CPr05OmaAfhNRtfHoq1ovXMFaWvaPnEeJiWC0zCRibxVP3AufzmJn-mMvj2TJNerctDiIm0GtePxqoZkvmrd82eoXZElqng_3-9e_NfiGYAvw4S9aIX_G7dcs48RMRXKKe65UA0pbOY1ifC4gzGPA6z0jKgEOnot3qJ1tb1WmxiO0_z3IH6G7dKB8eY23i3vKuCPvL7dsQeBsrJW9uZjoWcnZlJmel9b2XlcQ')"></div>
+<div class="absolute top-3 right-3 px-2 py-1 rounded bg-status-blue-light text-status-blue-dark border border-status-blue/20 flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="storefront" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="font-label-md text-label-md">Disponibles</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Plaza Real, CDMX</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface-variant rounded text-[11px] font-semibold tracking-wide uppercase border border-outline-variant/50">Shell</span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                                        Polanco
+                                    </span>
+</div>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-3 gap-2 pt-4 border-t border-outline-variant/30">
+<div class="text-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">18</p>
+</div>
+<div class="text-center border-x border-outline-variant/30">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Rentados</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">15</p>
+</div>
+<div class="text-center">
+<p class="font-label-md text-label-md text-status-blue-dark mb-1">Disp.</p>
+<p class="font-data-mono text-data-mono text-status-blue-dark font-bold">3</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Amarillo (Potencial) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden border border-outline-variant/30 flex flex-col group hover:border-primary/50 transition-colors">
+<div class="h-48 relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="An expansive commercial plaza under development or renovation next to a service station, construction elements visible but clean, bright daytime, professional real estate aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFiFWT6v6Afsm2FQ9JMfumoMIwXNRe9CRnAQexVNoBFKyP_hf31K4eqoIyLnict-Atk-NPw77w5XTSsjkkEWcBrAYa4ZjWPbgXj28Q0Nu6EnZTKJudX-btL_BTr2DCMeCdZ9lKdRd0dRMOIYQouDHFQzP5A5micLuqckCPRbWz8lJ6NCaGaTx6oiahv6_ZrNzVmAnXU9_DQroNjiI7IpFoUl8WCrwDQUXmebWgZmQJ4lUOG6nsthx3kA')"></div>
+<div class="absolute top-3 right-3 px-2 py-1 rounded bg-status-yellow-light text-status-yellow-dark border border-status-yellow/20 flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-label-md text-label-md">Potencial</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Norte 45, Monterrey</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface-variant rounded text-[11px] font-semibold tracking-wide uppercase border border-outline-variant/50">BP</span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                                        San Pedro
+                                    </span>
+</div>
+</div>
+</div>
+<div class="mt-auto grid grid-cols-3 gap-2 pt-4 border-t border-outline-variant/30">
+<div class="text-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Total</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">8</p>
+</div>
+<div class="text-center border-x border-outline-variant/30">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Rentados</p>
+<p class="font-data-mono text-data-mono text-on-surface font-semibold">2</p>
+</div>
+<div class="text-center">
+<p class="font-label-md text-label-md text-status-yellow-dark mb-1">Disp.</p>
+<p class="font-data-mono text-data-mono text-status-yellow-dark font-bold">6</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="/navigation.js?v=20260901-former-tenants"></script>
+<script src="/former-tenants.js?v=20260901-initial"></script>
+</body></html>

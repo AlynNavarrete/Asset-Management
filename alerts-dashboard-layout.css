@@ -1,0 +1,64 @@
+/* Ajuste final del resumen: ambas tablas deben verse completas sin desplazamiento horizontal. */
+@media (min-width: 1051px) {
+  .alerts-layout {
+    grid-template-columns: minmax(570px, .95fr) minmax(720px, 1.55fr) !important;
+  }
+}
+
+.expiry-table-wrap {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-gutter: stable;
+}
+
+.expiry-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed;
+}
+
+.expiry-table th,
+.expiry-table td {
+  overflow: hidden;
+  padding-inline: 9px !important;
+  text-overflow: ellipsis;
+}
+
+.expiry-table th:nth-child(1) { width: 36%; }
+.expiry-table th:nth-child(2) { width: 27%; }
+.expiry-table th:nth-child(3) { width: 21%; }
+.expiry-table th:nth-child(4) { width: 16%; }
+
+.expiry-table td:first-child strong,
+.expiry-table td:first-child small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expiry-table .expiry-days {
+  min-width: 76px;
+  padding-inline: 7px;
+  white-space: nowrap;
+}
+
+.expiry-table .expiry-download {
+  width: 36px;
+  min-width: 36px;
+  height: 34px;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
+}
+
+.expiry-table .expiry-download .material-symbols-outlined {
+  color: #fff;
+  font-size: 19px;
+}
+
+@media (max-width: 1050px) {
+  .expiry-table-wrap { overflow-x: auto !important; }
+  .expiry-table { min-width: 560px !important; }
+}

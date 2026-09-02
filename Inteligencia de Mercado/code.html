@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>document.documentElement.classList.toggle('rp-dark',(localStorage.getItem('rp-theme')||'light')==='dark')</script>
+  <title>Inteligencia de Mercado · RedPetroil</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="/market-intelligence.css?v=20260826-light-theme">
+  <link rel="stylesheet" href="/proposal-live-editor.css?v=20260826-signature-economics">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body class="market-page">
+  <main id="market-main" class="market-shell">
+    <nav class="market-back"><a id="back-to-vacancies" href="/Admin%20Vacantes/code.html?view=available"><span class="material-symbols-outlined">arrow_back</span>Volver a Locales disponibles</a><strong>Módulo de Inteligencia de Mercado <small>Piloto Mazatlán</small></strong><span id="denue-state">Preparando análisis…</span></nav>
+
+    <section class="market-summary">
+      <div><small>Análisis detallado</small><h1 id="market-local">Local</h1><p id="market-location">Estación</p></div>
+      <div class="summary-metrics"><span><small>Superficie</small><b id="summary-area">—</b></span><span><small>Renta estimada</small><b id="summary-rent">—</b></span><span><small>Estatus</small><b id="summary-status">—</b></span><span class="radius-control"><small>Radio analizado</small><select id="analysis-radius" aria-label="Seleccionar radio de análisis"><option value="800">800 m</option><option value="1000">1 km</option><option value="2000">2 km</option></select></span></div>
+    </section>
+
+    <section class="market-columns">
+      <div class="market-column market-map-column">
+        <article class="market-card map-card">
+          <header><div><small>INEGI · DENUE</small><h2>Mapa comercial</h2></div><span class="material-symbols-outlined">explore</span></header>
+          <div id="denue-map" aria-label="Mapa de establecimientos alrededor del local"></div>
+          <div class="map-legend"><span><i class="food"></i>Alimentos</span><span><i class="health"></i>Salud</span><span><i class="retail"></i>Comercio</span><span><i class="service"></i>Servicios</span></div>
+        </article>
+        <article class="market-card environment-card">
+          <header><div><small id="environment-radius">Radio de 1 km</small><h2>Métricas del entorno</h2></div><span class="material-symbols-outlined">monitoring</span></header>
+          <div class="environment-metrics"><span><small>Densidad comercial</small><b id="density-value">—</b><em id="density-label">Calculando</em></span><span><small>Nivel de competencia</small><b id="competition-value">—</b><em id="competition-label">Calculando</em></span><span><small>Giro predominante</small><b id="predominant-value">—</b><em id="predominant-share">—</em></span></div>
+        </article>
+      </div>
+
+      <div class="market-column market-affinity-column">
+        <article class="market-card affinity-card">
+          <header><div><small>Modelo comercial</small><h2>Score de afinidad</h2></div><span class="material-symbols-outlined">auto_awesome</span></header>
+          <div id="affinity-list" class="affinity-list"></div>
+        </article>
+        <div id="proposal-tenant-picker" class="proposal-tenant-picker" hidden>
+          <label for="proposal-tenant-select">Seleccionar inquilino potencial</label>
+          <div><select id="proposal-tenant-select"><option value="">Selecciona un inquilino…</option></select><button id="confirm-proposal-tenant" type="button" disabled>Ver Propuesta</button></div>
+        </div>
+        <div class="column-action"><button id="send-proposal" type="button" aria-expanded="false" aria-controls="proposal-tenant-picker"><span class="material-symbols-outlined">description</span>Propuesta Comercial<span class="material-symbols-outlined proposal-chevron">expand_less</span></button></div>
+      </div>
+
+      <div class="market-column market-prospects-column">
+        <article class="market-card prospects-card">
+          <header><div><small>Sistema + DENUE</small><h2>Inquilinos potenciales</h2></div><span class="material-symbols-outlined">target</span></header>
+          <div id="prospects-list" class="prospects-list"></div>
+        </article>
+        <div class="column-action"><button id="download-market-pdf" type="button"><span class="material-symbols-outlined">preview</span>Ver reporte PDF</button></div>
+      </div>
+    </section>
+  </main>
+  <div id="prospect-modal" class="prospect-modal" hidden>
+    <button class="prospect-modal-backdrop" type="button" data-close-prospect aria-label="Cerrar ficha"></button>
+    <section class="prospect-modal-panel" role="dialog" aria-modal="true" aria-labelledby="prospect-modal-title">
+      <header><div><small id="prospect-modal-source">Prospecto</small><h2 id="prospect-modal-title">Ficha del inquilino</h2></div><button type="button" data-close-prospect aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header>
+      <div id="prospect-modal-body" class="prospect-modal-body"></div>
+      <footer><button type="button" class="prospect-close-button" data-close-prospect>Cerrar</button><button id="prospect-follow-up" type="button" class="prospect-follow-button"><span class="material-symbols-outlined">add_task</span>Crear seguimiento</button></footer>
+    </section>
+  </div>
+  <div id="proposal-preview-modal" class="proposal-preview-modal" hidden>
+    <button class="proposal-preview-backdrop" type="button" data-close-proposal-preview aria-label="Cerrar propuesta"></button>
+    <section class="proposal-preview-panel" role="dialog" aria-modal="true" aria-labelledby="proposal-preview-title">
+      <header><div><small>Vista previa del documento</small><h2 id="proposal-preview-title">Propuesta Comercial</h2></div><button type="button" data-close-proposal-preview aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header>
+      <div class="proposal-workspace">
+        <aside class="proposal-control-panel">
+          <div id="proposal-approval-state" class="proposal-approval-state"><span class="material-symbols-outlined">draft</span><div><small>Estado</small><strong>Borrador</strong></div></div>
+          <button id="download-commercial-proposal" type="button"><span class="material-symbols-outlined">picture_as_pdf</span><span><b>1. Descargar PDF</b><small>Guardar propuesta comercial</small></span></button>
+          <button id="modify-commercial-proposal" type="button"><span class="material-symbols-outlined">edit_note</span><span><b>2. Modificar Propuesta</b><small>Editar texto y condiciones</small></span></button>
+          <button id="approve-commercial-proposal" type="button"><span class="material-symbols-outlined">approval</span><span><b>3. Aprobar Propuesta Comercial</b><small>Registrar autorización</small></span></button>
+          <form id="proposal-edit-form" class="proposal-edit-form" hidden>
+            <label><span>Texto adicional</span><textarea name="customText" rows="3" placeholder="Agrega información específica para el prospecto…"></textarea></label>
+            <div class="proposal-edit-grid"><label><span>Renta mensual</span><input name="monthlyRent" type="number" min="0" step="500"></label><label><span>Depósito</span><input name="deposit" placeholder="Ej. 2 meses de renta"></label></div>
+            <label><span>Plazo de arrendamiento</span><input name="term" placeholder="Ej. 5 años con opción a renovación"></label>
+            <label><span>IVA y condiciones fiscales</span><input name="iva" placeholder="Más IVA, en su caso"></label>
+            <label><span>Siguiente paso</span><textarea name="nextStep" rows="3"></textarea></label>
+            <div><button id="cancel-proposal-edit" type="button">Cancelar</button><button type="submit">Guardar modificación</button></div>
+          </form>
+        </aside>
+        <section id="proposal-approval-panel" class="proposal-approval-panel" hidden aria-labelledby="proposal-approval-title">
+          <header><div><small>Autorización interna</small><h3 id="proposal-approval-title">Aprobar propuesta</h3></div><button id="close-proposal-approval" type="button" aria-label="Cerrar autorización"><span class="material-symbols-outlined">close</span></button></header>
+          <form id="proposal-approval-form">
+            <label class="approval-step"><b><i>1</i> Responsable que firma</b><span>Selecciona un usuario del sistema.</span><select name="responsible" required><option value="">Seleccionar responsable…</option><option value="Alyn">Alyn</option><option value="Ana Rodríguez">Ana Rodríguez</option></select></label>
+            <label class="approval-step approval-consent"><b><i>2</i> Declaración de conformidad</b><span>Confirma que el documento fue revisado.</span><em><input name="consent" type="checkbox" required> He leído la propuesta comercial, comprendo sus condiciones y estoy de acuerdo con el contenido para autorizar su envío.</em></label>
+            <div class="approval-step"><b><i>3</i> Firma de autorización</b><span>Firma con el mouse o con el dedo dentro del recuadro; usa la línea tenue como guía.</span><canvas id="proposal-signature" width="660" height="320" aria-label="Espacio amplio para firma"></canvas><button id="clear-proposal-signature" type="button">Limpiar firma</button></div>
+            <div class="approval-form-actions"><button id="cancel-proposal-approval" type="button">Cancelar</button><button type="submit"><span class="material-symbols-outlined">verified</span>Aprobar en el sistema</button></div>
+          </form>
+        </section>
+        <div class="proposal-preview-scroll"><article id="proposal-preview-paper" class="proposal-preview-paper"></article></div>
+      </div>
+      <footer><button type="button" class="proposal-preview-close" data-close-proposal-preview>Cerrar vista previa</button></footer>
+    </section>
+  </div>
+  <div id="market-toast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="/navigation.js?v=20260820-market-intelligence"></script>
+  <link href="/proposal-signature-align.css?v=20260827-smooth-signature" rel="stylesheet">
+  <link href="/market-report-preview.css?v=20260901-letter-preview" rel="stylesheet">
+  <script src="/market-intelligence.js?v=20260901-report-contacts"></script>
+  <script src="/market-report.js?v=20260901-letter-preview"></script>
+</body>
+</html>

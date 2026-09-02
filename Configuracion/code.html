@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuración - Asset Management Comercial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="/settings.css?v=20260807-fixed-compact">
+</head>
+<body>
+  <main class="settings-shell">
+    <header class="settings-topbar">
+      <label class="settings-search"><input type="search" placeholder="Buscar estación, local o contrato"><span class="material-symbols-outlined">search</span></label>
+      <button id="settings-notifications" class="settings-icon-button" type="button" aria-label="Notificaciones"><span class="material-symbols-outlined">notifications</span><b>4</b></button>
+      <div class="settings-user"><span>Alyn</span><strong>AL</strong></div>
+    </header>
+    <section class="settings-heading"><h1>Configuración</h1><p>Ajusta la apariencia, reglas automáticas y canales de notificación.</p></section>
+
+    <div class="settings-grid">
+      <section class="settings-card appearance-card">
+        <h2>Apariencia</h2>
+        <div class="setting-row"><div><h3>Modo noche</h3><p>Reduce el brillo y mejora la lectura en ambientes oscuros.</p></div><label class="switch"><input id="dark-mode-toggle" type="checkbox"><span></span></label></div>
+        <div class="theme-preview"><span class="light-preview"><i class="material-symbols-outlined">light_mode</i>Claro</span><span class="dark-preview"><i class="material-symbols-outlined">dark_mode</i>Oscuro</span></div>
+      </section>
+
+      <section class="settings-card">
+        <h2>Reglas de alertas</h2>
+        <div class="setting-row"><div><h3>Alerta automática de vencimiento</h3><p>Generar 60 días antes</p></div><label class="switch"><input data-setting="expiry-alert" type="checkbox" checked><span></span></label></div>
+        <div class="setting-row"><div><h3>Recordatorio a 30 días</h3><p>Enviar segundo aviso</p></div><label class="switch"><input data-setting="reminder-alert" type="checkbox" checked><span></span></label></div>
+        <div class="setting-row"><div><h3>Escalamiento a dirección</h3><p>Cuando falten 15 días</p></div><label class="switch"><input data-setting="escalation-alert" type="checkbox"><span></span></label></div>
+      </section>
+
+      <section class="settings-card">
+        <h2>Canales</h2>
+        <div class="setting-row"><div><h3>Correo corporativo</h3><p>Notificaciones por correo electrónico</p></div><button class="channel-status active" data-channel="email">Activo</button></div>
+        <div class="setting-row"><div><h3>Notificaciones internas</h3><p>Centro de notificaciones</p></div><button class="channel-status active" data-channel="internal">Activo</button></div>
+        <div class="setting-row"><div><h3>SMS</h3><p>Requiere proveedor externo</p></div><button class="channel-status pending" data-channel="sms">Pendiente</button></div>
+      </section>
+    </div>
+  </main>
+  <div id="settings-toast" role="status" aria-live="polite"></div>
+  <script src="/navigation.js?v=20260812-notifications-menu"></script>
+  <script src="/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Alertas Programadas - Asset Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="/scheduled-alerts.css?v=20260827-layout-fix">
+</head>
+<body class="scheduled-alerts-page">
+  <main class="scheduled-alerts-shell">
+    <header class="scheduled-heading">
+      <div><h1>Alertas Programadas</h1><p>Consulta, ordena y revisa los correos que serán enviados automáticamente.</p></div>
+      <a href="/Alerta%20Nueva/code.html"><span class="material-symbols-outlined">add_alert</span>Nueva alerta</a>
+    </header>
+    <section class="scheduled-card">
+      <div class="scheduled-toolbar">
+        <label class="scheduled-search"><span class="material-symbols-outlined">search</span><input id="scheduled-search" type="search" placeholder="Buscar alerta, local o destinatario..."></label>
+        <label>Ordenar por<select id="scheduled-sort"><option value="date">Fecha más próxima</option><option value="priority">Nivel de importancia</option></select></label>
+        <strong id="scheduled-count"></strong>
+      </div>
+      <div class="scheduled-table-wrap">
+        <table>
+          <thead><tr><th>Tipo de alerta</th><th>Local</th><th>Fecha programada</th><th>Días faltantes para el correo</th><th>Persona destinataria</th><th>Prioridad</th><th>Correo</th></tr></thead>
+          <tbody id="scheduled-body"></tbody>
+        </table>
+        <div id="scheduled-empty" hidden><span class="material-symbols-outlined">notifications_off</span><strong>No hay alertas programadas</strong><p>Crea una alerta nueva para verla en esta tabla.</p></div>
+      </div>
+    </section>
+  </main>
+  <dialog id="email-preview-dialog">
+    <section><header><div><small>Vista previa del correo</small><h2 id="email-preview-title"></h2></div><button type="button" data-close-preview aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header><div id="email-preview-content"></div><footer><button type="button" data-close-preview>Cerrar vista previa</button></footer></section>
+  </dialog>
+  <div id="scheduled-toast" role="status"></div>
+<script src="/navigation.js?v=20260828-calendar-filters"></script>
+  <script src="/scheduled-alerts.js?v=20260827"></script>
+</body>
+</html>

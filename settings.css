@@ -1,0 +1,59 @@
+:root { --navy:#101f78; --blue:#177fd0; --cyan:#16ace9; --bg:#eef2f7; --card:#fff; --text:#101828; --muted:#718096; --line:#dce2ea; --green:#14ad68; }
+* { box-sizing: border-box; }body { margin:0; color:var(--text); background:var(--bg); font-family:Inter,sans-serif; }button,input { font:inherit; }
+.settings-shell { min-height:100vh; padding:22px 40px 50px; }.settings-topbar { display:flex; align-items:center; justify-content:flex-end; gap:18px; min-height:68px; }
+.settings-search { display:flex; align-items:center; width:min(680px,62vw); margin-right:auto; padding:0 18px; border:1px solid var(--line); border-radius:24px; background:var(--card); }.settings-search input { width:100%; padding:14px 6px; border:0; outline:0; background:transparent; }.settings-search span { color:var(--blue); }
+.settings-icon-button { position:relative; display:grid; place-items:center; width:54px; height:54px; border:0; border-radius:18px; color:var(--navy); background:var(--card); cursor:pointer; }.settings-icon-button b { position:absolute; top:5px; right:5px; display:grid; place-items:center; width:20px; height:20px; border-radius:50%; color:#fff; background:#e24b55; font-size:11px; }
+.settings-user { display:flex; align-items:center; gap:12px; padding:7px 10px 7px 17px; border-radius:20px; background:var(--card); }.settings-user strong { display:grid; place-items:center; width:42px; height:42px; border-radius:50%; color:#fff; background:linear-gradient(135deg,var(--cyan),#3d67c8); }
+.settings-heading { margin:36px 0 28px; }.settings-heading h1 { margin:0 0 8px; font-size:36px; letter-spacing:-.04em; }.settings-heading p { margin:0; color:var(--muted); font-size:17px; }
+.settings-grid { display:grid; grid-template-columns:repeat(2,minmax(320px,1fr)); gap:26px; }.settings-card { padding:28px; border:1px solid var(--line); border-radius:24px; background:var(--card); box-shadow:0 12px 30px rgba(16,31,120,.05); }.settings-card h2 { margin:0 0 28px; font-size:24px; }.appearance-card { grid-column:1/-1; }
+.setting-row { display:flex; align-items:center; justify-content:space-between; gap:22px; min-height:86px; padding:16px 0; border-bottom:1px solid var(--line); }.setting-row:last-child { border-bottom:0; }.setting-row h3 { margin:0 0 4px; font-size:17px; }.setting-row p { margin:0; color:var(--muted); font-size:14px; }
+.switch { position:relative; flex:0 0 auto; width:60px; height:34px; }.switch input { position:absolute; opacity:0; }.switch span { position:absolute; inset:0; border-radius:20px; background:#cad3df; cursor:pointer; transition:.2s; }.switch span::after { content:''; position:absolute; top:4px; left:4px; width:26px; height:26px; border-radius:50%; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,.2); transition:.2s; }.switch input:checked+span { background:var(--green); }.switch input:checked+span::after { transform:translateX(26px); }.switch input:focus-visible+span { outline:3px solid #78bdf0; outline-offset:2px; }
+.theme-preview { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }.theme-preview span { display:flex; align-items:center; justify-content:center; gap:9px; padding:14px; border:2px solid var(--line); border-radius:14px; font-weight:600; }.light-preview { background:#f7f9fc; }.dark-preview { color:#e5e7eb; background:#182235; }
+.channel-status { min-width:100px; padding:9px 14px; border:0; border-radius:20px; font-weight:700; cursor:pointer; }.channel-status.active { color:#008a4e; background:#dcf7ea; }.channel-status.pending { color:#9a6800; background:#fff1c9; }
+#settings-toast { position:fixed; right:24px; bottom:24px; z-index:2000; padding:13px 18px; border-radius:11px; color:#fff; background:var(--navy); opacity:0; transform:translateY(12px); pointer-events:none; transition:.2s; }#settings-toast.visible { opacity:1; transform:none; }
+html.rp-dark { --bg:#0f172a; --card:#182235; --text:#e5e7eb; --muted:#aeb9cb; --line:#344258; }html.rp-dark .light-preview { color:#172033; background:#eef2f7; }html.rp-dark .settings-search input { color:var(--text); }
+@media(max-width:850px){.settings-shell{padding:18px}.settings-grid{grid-template-columns:1fr}.appearance-card{grid-column:auto}.settings-search{width:auto;flex:1}.settings-user span{display:none}}
+@media(max-width:560px){.settings-heading h1{font-size:29px}.settings-card{padding:20px}.setting-row{align-items:flex-start}.theme-preview{grid-template-columns:1fr}}
+
+/* Standardized edge-to-edge layout and readable type */
+.settings-shell{padding:0 !important}
+.settings-heading{margin:30px 40px 24px !important}.settings-heading h1{font-size:38px !important}.settings-heading p{font-size:18px !important}
+.settings-grid{margin:0 40px 40px !important}.settings-card h2{font-size:25px !important}.setting-row h3{font-size:18px !important}.setting-row p{font-size:15px !important;line-height:22px !important}
+@media(max-width:850px){.settings-heading{margin:24px 18px 20px !important}.settings-grid{margin:0 18px 28px !important}}
+
+/* Fixed, compact settings dashboard on desktop */
+@media (min-width:851px) and (min-height:650px){
+  html:has(body .settings-shell),body:has(.settings-shell){height:100%;overflow:hidden}
+  .settings-shell{height:100vh !important;min-height:0 !important;overflow:hidden}
+  .settings-heading{margin:18px 32px 14px !important}
+  .settings-heading h1{margin-bottom:4px !important;font-size:34px !important}
+  .settings-heading p{font-size:16px !important}
+  .settings-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:auto minmax(0,1fr);
+    gap:16px;
+    height:calc(100vh - 174px);
+    margin:0 32px 16px !important;
+    overflow:hidden;
+  }
+  .settings-card{min-height:0;padding:18px 22px;border-radius:20px;overflow:hidden}
+  .settings-card h2{margin-bottom:12px;font-size:22px !important}
+  .appearance-card{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+    grid-template-rows:auto auto;
+    column-gap:28px;
+    align-items:center;
+  }
+  .appearance-card h2{grid-column:1/-1}
+  .appearance-card .setting-row{grid-column:1;grid-row:2}
+  .appearance-card .theme-preview{grid-column:2;grid-row:2;margin:0}
+  .setting-row{min-height:0;padding:12px 0;gap:16px}
+  .setting-row h3{font-size:17px !important}
+  .setting-row p{font-size:14px !important;line-height:19px !important}
+  .theme-preview span{padding:10px}
+  .switch{width:54px;height:30px}
+  .switch span::after{width:22px;height:22px}
+  .switch input:checked+span::after{transform:translateX(24px)}
+  .channel-status{min-width:90px;padding:7px 12px}
+}

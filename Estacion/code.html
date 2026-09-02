@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Estación Las Habas - Asset Management Comercial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9fa",
+                        "inverse-primary": "#b3c5ff",
+                        "on-secondary-fixed": "#091c34",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#bcc8d5",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#d8e4f2",
+                        "outline-variant": "#c2c6d8",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f4f5",
+                        "tertiary": "#4f5a66",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-bright": "#f8f9fa",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "secondary": "#4f5f7b",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-primary-fixed": "#001849",
+                        "surface-container": "#edeeef",
+                        "on-secondary-container": "#51617d",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#f4f8ff",
+                        "on-primary-container": "#f8f7ff",
+                        "on-surface-variant": "#424656",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-fixed-variant": "#3d4853",
+                        "background": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "outline": "#727687",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#374762",
+                        "secondary-container": "#ccdefe",
+                        "secondary-fixed-dim": "#b6c7e7",
+                        "surface-tint": "#0054d6",
+                        "on-surface": "#191c1d",
+                        "on-tertiary-fixed": "#111d26",
+                        "primary-container": "#0066ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "primary": "#0050cb",
+                        "primary-fixed": "#dae1ff",
+                        "on-primary-fixed-variant": "#003fa4",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary-fixed": "#d5e3ff",
+                        "tertiary-container": "#67737f",
+                        "surface-dim": "#d9dadb",
+                        
+                        // Status Colors for Tags
+                        "status-ready": "#dcfce7",
+                        "status-ready-text": "#166534",
+                        "status-pending": "#fef08a",
+                        "status-pending-text": "#854d0e",
+                        "status-vacant": "#bfdbfe",
+                        "status-vacant-text": "#1e3a8a",
+                        "status-adapt": "#fed7aa",
+                        "status-adapt-text": "#9a3412",
+                        "status-potential": "#e5e7eb",
+                        "status-potential-text": "#374151"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-page": "32px",
+                        "sidebar-collapsed": "72px",
+                        "sidebar-width": "260px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    },
+                    "boxShadow": {
+                        "card": "0px 4px 12px rgba(0, 0, 0, 0.04)",
+                        "modal": "0px 8px 24px rgba(0, 0, 0, 0.08)",
+                        "nav": "0px 1px 3px rgba(0, 0, 0, 0.05)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom scrollbar for tables */
+        .table-scroll::-webkit-scrollbar { height: 6px; }
+        .table-scroll::-webkit-scrollbar-track { background: transparent; }
+        .table-scroll::-webkit-scrollbar-thumb { background: theme('colors.outline-variant'); border-radius: 4px; }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased bg-background">
+<!-- Shared Component: SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-6 bg-on-secondary-fixed shadow-nav fixed left-0 top-0 w-sidebar-width z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-surface-bright">Asset Management Comercial</h1>
+<p class="font-label-md text-label-md text-tertiary-fixed-dim mt-1">Institutional CRE Oversight</p>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Inicio</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-secondary-fixed-dim text-on-secondary-fixed border-l-4 border-primary px-4 py-3 opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="location_city">location_city</span>
+<span class="font-label-md text-label-md">Estaciones</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="domain_disabled">domain_disabled</span>
+<span class="font-label-md text-label-md">Administración de Vacantes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-md text-label-md">Calendario y Alertas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Usuarios</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Configuración</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto px-4">
+<a class="flex items-center gap-3 text-surface-variant hover:text-surface-bright hover:bg-on-secondary-fixed-variant transition-colors duration-200 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Cerrar sesión</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="md:ml-sidebar-width min-h-screen flex flex-col relative">
+<!-- Shared Component: TopNavBar -->
+<header class="flex justify-between items-center h-16 px-margin-page docked full-width top-0 sticky z-40 bg-surface border-b border-outline-variant flat no shadows">
+<div class="flex items-center gap-4">
+<!-- Search Bar Placeholder -->
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" placeholder="Buscar estación, inquilino..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md font-bold">
+                        EU
+                    </div>
+<div class="hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface">Executive User</p>
+<p class="text-xs text-on-surface-variant">Asset Manager</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content Workspace -->
+<div class="p-margin-page flex-1 flex flex-col gap-gutter">
+<!-- Breadcrumb & Header Action -->
+<div class="flex justify-between items-end flex-wrap gap-4">
+<div>
+<nav class="flex text-sm text-on-surface-variant mb-2">
+<a class="hover:text-primary transition-colors" href="#">Estaciones</a>
+<span class="mx-2">/</span>
+<span class="text-on-surface font-medium">Estación Las Habas</span>
+</nav>
+<h2 class="font-display-lg text-display-lg text-on-surface">Estación Las Habas</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Mazatlán, Sinaloa</p>
+</div>
+<div class="flex gap-3">
+<button id="generate-station-report" type="button" class="px-4 py-2 bg-surface border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                        Generar Reporte
+                    </button>
+<button id="edit-station-button" type="button" class="px-4 py-2 bg-surface border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Editar
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-fixed-variant transition-colors shadow-sm flex items-center gap-2" onclick="document.getElementById('add-local-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Agregar Local
+                    </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Left Section: Station Info -->
+<div class="xl:col-span-4 flex flex-col gap-gutter">
+<!-- Photo Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-card overflow-hidden border border-surface-variant">
+<div class="bg-cover bg-center w-full h-56 relative" data-alt="A high-quality architectural exterior photograph of a modern commercial service station 'Estación Las Habas' in Mazatlán. The image is taken during golden hour, highlighting the clean structural lines, expansive concrete forecourt, and a sleek retail building attached. The lighting is bright and inviting, fitting a corporate real estate portfolio presentation. Modern aesthetic, clear skies." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzPcmAnlAcWvV4QUtgkc_idrWXezGWBA5vg_pUp62jAhLS_9AgMU0cEmazR_XSxlem2WVpsMvyXgcO9iyzM5uO8adatjqaH2ZHlRWbNBM9MUyoqO4_Goq3s997B7DAV7fDFSNbfAVx484yGe-Jf0RKXcl9ovDkHp9j74an-F-VBNUrQOaYGfv7eiQjUo2vX1SQ-pPmsPMEgNSOlrcEBettjquyHuJZZvy0s6689nRToJ6AIWI4qvKdNQ')">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<div>
+<span class="px-2 py-1 bg-surface-container/20 backdrop-blur-md border border-white/20 text-white rounded text-xs font-semibold mb-2 inline-block">Pemex Premium</span>
+</div>
+<button id="station-map-button" type="button" class="p-2 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-white/40 transition-colors border border-white/20" aria-label="Abrir estación en Google Maps" title="Ver en Google Maps">
+<span class="material-symbols-outlined text-[20px]">map</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-sm text-headline-sm mb-4 border-b border-surface-variant pb-2">Detalles Generales</h3>
+<dl class="space-y-4">
+<div class="flex justify-between items-start">
+<dt class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">location_on</span> Dirección
+                                    </dt>
+<dd class="font-data-mono text-on-surface text-right max-w-[200px]">Av. Sábalo Cerritos 3110, Cerritos, 82110 Mazatlán, Sin.</dd>
+</div>
+<div class="flex justify-between items-center">
+<dt class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">square_foot</span> Superficie Terreno
+                                    </dt>
+<dd class="font-data-mono text-on-surface font-semibold">2,450 m²</dd>
+</div>
+<div class="flex justify-between items-center">
+<dt class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">storefront</span> Superficie Rentable
+                                    </dt>
+<dd class="font-data-mono text-on-surface font-semibold">850 m²</dd>
+</div>
+<div class="flex justify-between items-center">
+<dt class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">trending_up</span> Capacidad Ampliación
+                                    </dt>
+<dd class="font-data-mono text-status-ready-text bg-status-ready px-2 py-0.5 rounded text-xs font-bold">Sí (Potencial)</dd>
+</div>
+</dl>
+<div class="mt-6 pt-4 border-t border-surface-variant">
+<button id="view-floor-plan-button" type="button" class="w-full py-2.5 flex items-center justify-center gap-2 text-primary font-label-md text-label-md hover:bg-primary-fixed transition-colors rounded-lg">
+<span class="material-symbols-outlined text-[18px]">view_compact</span>
+                                    Ver Plano Arquitectónico
+                                </button>
+</div>
+</div>
+</div>
+<!-- Occupancy Mini Chart -->
+<div class="bg-surface-container-lowest rounded-xl shadow-card p-6 border border-surface-variant">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider">Ocupación</h3>
+<div class="flex items-end justify-between mb-2">
+<span class="font-display-lg text-display-lg text-on-surface">82%</span>
+<span class="font-body-md text-on-surface-variant mb-1">Rentado</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 82%"></div>
+<div class="bg-status-adapt h-full" style="width: 8%"></div>
+<div class="bg-status-vacant h-full" style="width: 10%"></div>
+</div>
+<div class="flex gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Activos
+                            </div>
+<div class="flex items-center gap-1.5 text-xs">
+<span class="w-2 h-2 rounded-full bg-status-adapt"></span> Adaptación
+                            </div>
+<div class="flex items-center gap-1.5 text-xs">
+<span class="w-2 h-2 rounded-full bg-status-vacant"></span> Vacante
+                            </div>
+</div>
+</div>
+</div>
+<!-- Right Section: Table & Totals -->
+<div class="xl:col-span-8 flex flex-col gap-gutter">
+<!-- KPI Summary Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border border-surface-variant flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Renta Mensual Total</p>
+<p class="font-headline-md text-headline-md text-on-surface mt-1">$145,500 <span class="text-sm font-normal text-on-surface-variant">MXN</span></p>
+</div>
+<div class="w-12 h-12 rounded-full bg-status-ready/30 flex items-center justify-center text-status-ready-text">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border border-surface-variant flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Superficie Vacante</p>
+<p class="font-headline-md text-headline-md text-on-surface mt-1">150 <span class="text-sm font-normal text-on-surface-variant">m²</span></p>
+</div>
+<div class="w-12 h-12 rounded-full bg-status-vacant/30 flex items-center justify-center text-status-vacant-text">
+<span class="material-symbols-outlined">crop_free</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-card p-5 border border-surface-variant flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">Próx. Vencimiento</p>
+<p class="font-headline-md text-headline-md text-on-surface mt-1">Oct 2024</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-status-pending/40 flex items-center justify-center text-status-pending-text">
+<span class="material-symbols-outlined">event_upcoming</span>
+</div>
+</div>
+</div>
+<!-- Tenants Table Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-card border border-surface-variant flex-1 flex flex-col overflow-hidden">
+<div class="px-6 py-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm">Directorio de Locales</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<div class="overflow-x-auto table-scroll flex-1">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface border-b border-surface-variant font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-6 font-semibold">Local</th>
+<th class="py-3 px-6 font-semibold">Giro / Inquilino</th>
+<th class="py-3 px-6 font-semibold">Superficie</th>
+<th class="py-3 px-6 font-semibold text-right">Renta MXN</th>
+<th class="py-3 px-6 font-semibold">Vencimiento</th>
+<th class="py-3 px-6 font-semibold text-center">Estado Doc.</th>
+</tr>
+</thead>
+<tbody class="font-body-md divide-y divide-surface-variant text-on-surface">
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono font-semibold">L-01</td>
+<td class="py-4 px-6">
+<div class="font-medium">OXXO</div>
+<div class="text-xs text-on-surface-variant">Conveniencia</div>
+</td>
+<td class="py-4 px-6 font-data-mono">120 m²</td>
+<td class="py-4 px-6 font-data-mono text-right">$45,000</td>
+<td class="py-4 px-6 font-data-mono">15/Dic/2026</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-semibold bg-status-ready text-status-ready-text border border-status-ready-text/20">
+                                                Listo
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono font-semibold">L-02</td>
+<td class="py-4 px-6">
+<div class="font-medium">Farmacias Guadalajara</div>
+<div class="text-xs text-on-surface-variant">Farmacia</div>
+</td>
+<td class="py-4 px-6 font-data-mono">250 m²</td>
+<td class="py-4 px-6 font-data-mono text-right">$85,500</td>
+<td class="py-4 px-6 font-data-mono text-error">30/Oct/2024</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-semibold bg-status-pending text-status-pending-text border border-status-pending-text/20">
+                                                Renovación Pend.
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono font-semibold">L-03</td>
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface-variant italic">-- Disponible --</div>
+<div class="text-xs text-on-surface-variant">Comercial</div>
+</td>
+<td class="py-4 px-6 font-data-mono">80 m²</td>
+<td class="py-4 px-6 font-data-mono text-right text-on-surface-variant">--</td>
+<td class="py-4 px-6 font-data-mono text-on-surface-variant">--</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-semibold bg-status-vacant text-status-vacant-text border border-status-vacant-text/20">
+                                                Vacante
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono font-semibold">L-04</td>
+<td class="py-4 px-6">
+<div class="font-medium">Starbucks</div>
+<div class="text-xs text-on-surface-variant">Cafetería (Drive-Thru)</div>
+</td>
+<td class="py-4 px-6 font-data-mono">150 m²</td>
+<td class="py-4 px-6 font-data-mono text-right">$65,000</td>
+<td class="py-4 px-6 font-data-mono">01/Ene/2029</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-semibold bg-status-adapt text-status-adapt-text border border-status-adapt-text/20">
+                                                En Adaptación
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group opacity-75">
+<td class="py-4 px-6 font-data-mono font-semibold">L-EX</td>
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface-variant">Reserva Sur</div>
+<div class="text-xs text-on-surface-variant">Terreno Adicional</div>
+</td>
+<td class="py-4 px-6 font-data-mono">250 m²</td>
+<td class="py-4 px-6 font-data-mono text-right text-on-surface-variant">--</td>
+<td class="py-4 px-6 font-data-mono text-on-surface-variant">--</td>
+<td class="py-4 px-6 text-center">
+<span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-semibold bg-status-potential text-status-potential-text border border-status-potential-text/20">
+                                                Potencial
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 bg-surface border-t border-surface-variant flex justify-between items-center text-xs text-on-surface-variant">
+<span>Mostrando 5 locales</span>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-status-ready"></span> Vigente</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-status-pending"></span> Atención</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal: Agregar Local (Hidden by default) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center px-4 bg-on-background/40 backdrop-blur-sm" id="add-local-modal">
+<div class="add-local-panel bg-surface-container-lowest w-full rounded-xl shadow-modal border border-outline-variant flex flex-col">
+<div class="px-6 py-4 border-b border-surface-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Agregar Nuevo Local</h3>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('add-local-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form id="add-local-form" class="add-local-form">
+<div class="add-local-scroll">
+<section class="add-local-section"><h4><span class="material-symbols-outlined">storefront</span>Identificación del local</h4><div class="add-local-grid">
+<label><span>Identificador *</span><input name="localId" placeholder="Ej: L-05" required></label>
+<label><span>Nombre comercial</span><input name="commercialName" placeholder="Ej: Local disponible"></label>
+<label><span>Inquilino / razón social</span><input name="tenant" placeholder="Vacante o nombre del inquilino"></label>
+<label><span>Giro comercial *</span><input name="business" placeholder="Ej: Conveniencia, farmacia o restaurante" required></label>
+<label><span>Estatus *</span><select name="status" required><option>Vacante</option><option>Disponible</option><option>En promoción</option><option>Con prospecto</option><option>En adaptación</option><option>Activo</option><option>Potencial (Reserva)</option></select></label>
+<label><span>Superficie (m²) *</span><input name="area" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+<label><span>Cajones asignados</span><input name="parking" type="number" min="0" step="1" value="0"></label>
+<label><span>Uso de suelo</span><input name="landUse" value="Comercial"></label>
+</div></section>
+<section class="add-local-section"><h4><span class="material-symbols-outlined">payments</span>Condiciones económicas</h4><div class="add-local-grid">
+<label><span>Renta mensual (MXN) *</span><input name="rent" type="number" min="0" step="100" placeholder="Ej: 18000" required></label>
+<label><span>Mantenimiento mensual (MXN)</span><input name="maintenance" type="number" min="0" step="100" value="0"></label>
+<label><span>Depósito en garantía</span><input name="deposit" placeholder="Ej: 1 mes de renta"></label>
+<label><span>IVA</span><select name="tax"><option>Más IVA</option><option>IVA incluido</option><option>No aplica</option></select></label>
+<label><span>Incremento anual (%)</span><input name="annualIncrease" type="number" min="0" step="0.1" placeholder="Ej: 5"></label>
+<label><span>Moneda</span><select name="currency"><option>MXN</option><option>USD</option></select></label>
+</div></section>
+<section class="add-local-section"><h4><span class="material-symbols-outlined">event_note</span>Contrato y ubicación</h4><div class="add-local-grid">
+<label><span>Fecha de inicio</span><input name="startDate" type="date"></label>
+<label><span>Duración (meses)</span><input name="durationMonths" type="number" min="1" step="1" placeholder="Ej: 60"></label>
+<label><span>Fecha de vencimiento</span><input name="endDate" type="date"></label>
+<label><span>Alerta de renovación (días antes)</span><input name="renewalAlert" type="number" min="0" value="60"></label>
+<label class="add-local-wide"><span>Dirección completa *</span><input name="address" placeholder="Calle, número, colonia, municipio y estado" required></label>
+<label><span>Latitud</span><input name="latitude" type="number" step="any" placeholder="23.000000"></label>
+<label><span>Longitud</span><input name="longitude" type="number" step="any" placeholder="-106.000000"></label>
+<label class="add-local-wide"><span>Observaciones</span><textarea name="notes" rows="2" placeholder="Accesos, visibilidad, servicios, restricciones o información adicional"></textarea></label>
+</div></section>
+<section class="add-local-assets"><label class="add-local-upload"><input id="new-local-photo" type="file" accept="image/jpeg,image/png,image/webp" hidden><span class="material-symbols-outlined">add_photo_alternate</span><div><b>Fotografía del local *</b><small>JPG, PNG o WebP. Se optimiza antes de guardar.</small><em>Seleccionar fotografía</em></div><img id="new-local-photo-preview" alt="Vista previa del local" hidden></label>
+<label class="add-local-upload"><input id="new-local-documents" type="file" accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx" multiple hidden><span class="material-symbols-outlined">upload_file</span><div><b>Expediente documental</b><small>Contrato, plano, acta, identificación, constancia fiscal, póliza u otros.</small><em>Subir documentos</em></div></label></section>
+<div id="new-local-document-list" class="add-local-document-list"><span>Sin documentos seleccionados</span></div>
+</div>
+<footer class="add-local-footer"><p><span class="material-symbols-outlined">info</span>Los campos con * son obligatorios.</p><div><button type="button" class="add-local-cancel" onclick="document.getElementById('add-local-modal').classList.add('hidden')">Cancelar</button><button type="submit" class="add-local-save">Guardar Local</button></div></footer>
+</form>
+</div>
+</div>
+<link href="/station-local-form.css?v=20260828-complete" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/navigation.js?v=20260817-station-maps"></script>
+<script src="/station-actions.js?v=20260826-photo-editor"></script>
+<script src="/station-local-form.js?v=20260828-complete"></script>
+</body></html>
