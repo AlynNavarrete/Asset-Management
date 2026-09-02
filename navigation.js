@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stationSection = currentPath.includes('directorio de estaciones') ||
     currentPath.includes('/estacion/') || currentPath.includes('detalle del local');
-  const fixedDashboard = document.body.classList.contains('alerts-page') || currentPath.includes('/home/') || currentPath === '/' || currentPath.includes('calendario anual') || currentPath.includes('alerta nueva') || currentPath.includes('/configuracion/') || currentPath.includes('inteligencia de mercado');
+  const fixedDashboard = document.body.classList.contains('alerts-page') || currentPath.includes('/home/') || currentPath === '/' || currentPath.includes('calendario anual') || currentPath.includes('alerta nueva') || currentPath.includes('/configuracion/') || currentPath.includes('inteligencia de mercado') || currentPath.includes('admin vacantes');
   if (!stationSection && !fixedDashboard) {
     const fitPageToViewport = () => {
       const page = document.querySelector('.rp-page-content');
