@@ -225,35 +225,21 @@ document.addEventListener('DOMContentLoaded', () => {
     [city,status].forEach(select=>select.addEventListener('change',render));search.addEventListener('input',render);body.addEventListener('click',event=>{const button=event.target.closest('[data-local]');if(!button)return;toast.innerHTML=`<span class="material-symbols-outlined">info</span><div><strong>Cálculo de ${button.dataset.local}</strong><small>El botón está listo. Aquí conectaremos la metodología de renta sugerida.</small></div>`;toast.classList.add('visible');setTimeout(()=>toast.classList.remove('visible'),3000);});render();
   };
 
-  let activeView = '';
-  let pendingViewFrame = 0;
-  const renderView = (view) => {
+  const setView = (view) => {
     const available = view === 'available';
     const approved = view === 'approved';
     const commercial = view === 'commercial';
     const calculation = view === 'calculation';
+    tabs.querySelectorAll('button').forEach((button) => button.classList.toggle('is-active', button.dataset.vacancyView === view));
+    summaryCards.hidden = true;
     if (available) renderAvailableTable(); else if (approved) renderApprovedProposals(); else if(commercial) renderCommercialFollowup(); else if(calculation) renderVacancyCalculation(); else renderSummaryTable();
     tableCard.classList.toggle('is-available-view', available);
     tableCard.classList.toggle('is-approved-view', approved);
     tableCard.classList.toggle('is-commercial-view', commercial);
     tableCard.classList.toggle('is-calculation-view', calculation);
-    tableCard.removeAttribute('aria-busy');
-    tableCard.classList.remove('is-switching-view');
-    activeView = view;
-    pendingViewFrame = 0;
-  };
-  const setView = (view, immediate = false) => {
-    if (view === activeView && !pendingViewFrame) return;
-    tabs.querySelectorAll('button').forEach((button) => button.classList.toggle('is-active', button.dataset.vacancyView === view));
-    summaryCards.hidden = true;
-    tableCard.setAttribute('aria-busy','true');
-    tableCard.classList.add('is-switching-view');
-    if (pendingViewFrame) cancelAnimationFrame(pendingViewFrame);
-    if (immediate) { renderView(view); return; }
-    pendingViewFrame = requestAnimationFrame(() => renderView(view));
   };
   tabs.addEventListener('click', (event) => { const button = event.target.closest('[data-vacancy-view]'); if (button) setView(button.dataset.vacancyView); });
   totalCard.addEventListener('click', () => setView('available'));
   const approvalCount=JSON.parse(localStorage.getItem('rp-approved-commercial-proposals')||'[]').length;tabs.querySelector('#approved-proposals-count').textContent=approvalCount;
-  const initialParams=new URLSearchParams(location.search),initialView=initialParams.get('view');if(initialParams.get('show')==='approved'||initialView==='approved')setView('approved',true);else if(initialView==='available')setView('available',true);else if(initialView==='commercial')setView('commercial',true);else if(initialView==='calculation')setView('calculation',true);else setView('summary',true);
+  const initialParams=new URLSearchParams(location.search),initialView=initialParams.get('view');if(initialParams.get('show')==='approved'||initialView==='approved')setView('approved');else if(initialView==='available')setView('available');else if(initialView==='commercial')setView('commercial');else if(initialView==='calculation')setView('calculation');else renderSummaryTable();
 });
