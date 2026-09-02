@@ -28,3 +28,7 @@ html.rp-dark .executive-local-link{color:#6cc9f5}html.rp-dark .commercial-follow
   .vacancies-page .executive-profitable th,
   .vacancies-page .executive-profitable td{padding-left:8px;padding-right:8px}
 }
+
+.vacancies-page #vacancies-table-card{transition:opacity 100ms ease}
+.vacancies-page #vacancies-table-card.is-changing-view{opacity:.82;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.vacancies-page #vacancies-table-card{transition:none}}
