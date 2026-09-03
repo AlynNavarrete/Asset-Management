@@ -15,6 +15,11 @@ html.rp-dark { --bg:#0f172a; --card:#182235; --text:#e5e7eb; --muted:#aeb9cb; --
 @media(max-width:850px){.settings-shell{padding:18px}.settings-grid{grid-template-columns:1fr}.appearance-card{grid-column:auto}.settings-search{width:auto;flex:1}.settings-user span{display:none}}
 @media(max-width:560px){.settings-heading h1{font-size:29px}.settings-card{padding:20px}.setting-row{align-items:flex-start}.theme-preview{grid-template-columns:1fr}}
 
+.backup-card{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:center}
+.backup-copy{display:flex;align-items:center;gap:15px}.backup-copy>.material-symbols-outlined{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border-radius:14px;color:#0879bd;background:#e4f4fc;font-size:27px}.backup-copy h2{margin:0 0 5px}.backup-copy p,.backup-warning{margin:0;color:var(--muted);font-size:13px;line-height:19px}.backup-copy small{display:block;margin-top:6px;color:#1477b5;font-weight:700}.backup-actions{display:flex;gap:10px}.backup-actions button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;border:1px solid #0879bd;border-radius:11px;color:#fff;background:linear-gradient(110deg,#0ca5da,#3677d0);font-weight:750;cursor:pointer}.backup-actions button.secondary{color:#12659d;background:transparent}.backup-actions button:hover{filter:brightness(.96)}.backup-actions button:focus-visible{outline:3px solid #75c8ef;outline-offset:2px}.backup-actions .material-symbols-outlined{font-size:20px}.backup-warning{grid-column:1/-1;display:flex;align-items:center;gap:7px;padding-top:10px;border-top:1px solid var(--line)}.backup-warning .material-symbols-outlined{color:#e69a13;font-size:18px}
+html.rp-dark .backup-copy>.material-symbols-outlined{color:#78d3f7;background:#203a55}html.rp-dark .backup-actions button.secondary{color:#7dd3fc;border-color:#477694}
+@media(max-width:850px){.backup-card{grid-template-columns:1fr}.backup-actions{flex-wrap:wrap}.backup-actions button{flex:1 1 210px}}
+
 /* Standardized edge-to-edge layout and readable type */
 .settings-shell{padding:0 !important}
 .settings-heading{margin:30px 40px 24px !important}.settings-heading h1{font-size:38px !important}.settings-heading p{font-size:18px !important}
@@ -30,7 +35,7 @@ html.rp-dark { --bg:#0f172a; --card:#182235; --text:#e5e7eb; --muted:#aeb9cb; --
   .settings-heading p{font-size:16px !important}
   .settings-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
-    grid-template-rows:auto minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr) auto;
     gap:16px;
     height:calc(100vh - 174px);
     margin:0 32px 16px !important;
@@ -56,4 +61,5 @@ html.rp-dark { --bg:#0f172a; --card:#182235; --text:#e5e7eb; --muted:#aeb9cb; --
   .switch span::after{width:22px;height:22px}
   .switch input:checked+span::after{transform:translateX(24px)}
   .channel-status{min-width:90px;padding:7px 12px}
+  .backup-card{padding:13px 18px;gap:8px 20px}.backup-copy>.material-symbols-outlined{width:42px;height:42px;flex-basis:42px}.backup-copy h2{font-size:19px !important}.backup-copy p{font-size:12px !important;line-height:17px !important}.backup-warning{padding-top:7px;font-size:11px;line-height:15px}.backup-actions button{min-height:38px;padding:7px 12px;font-size:12px}
 }

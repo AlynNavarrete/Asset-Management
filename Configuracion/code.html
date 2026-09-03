@@ -37,10 +37,22 @@
         <div class="setting-row"><div><h3>Notificaciones internas</h3><p>Centro de notificaciones</p></div><button class="channel-status active" data-channel="internal">Activo</button></div>
         <div class="setting-row"><div><h3>SMS</h3><p>Requiere proveedor externo</p></div><button class="channel-status pending" data-channel="sms">Pendiente</button></div>
       </section>
+      <section class="settings-card backup-card" aria-labelledby="backup-title">
+        <div class="backup-copy">
+          <span class="material-symbols-outlined">cloud_sync</span>
+          <div><h2 id="backup-title">Respaldo de información</h2><p>Protege propuestas, firmas, usuarios, alertas, historiales, rentas y preferencias guardadas en este navegador.</p><small id="backup-status"></small></div>
+        </div>
+        <div class="backup-actions">
+          <button id="export-app-backup" type="button"><span class="material-symbols-outlined">download</span>Exportar respaldo</button>
+          <button id="import-app-backup" class="secondary" type="button"><span class="material-symbols-outlined">upload</span>Restaurar respaldo</button>
+          <input id="app-backup-file" type="file" accept="application/json,.json" hidden>
+        </div>
+        <p class="backup-warning"><span class="material-symbols-outlined">info</span>Exporta un archivo desde localhost y otro desde Vercel; cada dirección conserva datos independientes.</p>
+      </section>
     </div>
   </main>
   <div id="settings-toast" role="status" aria-live="polite"></div>
   <script src="/navigation.js?v=20260902-stable-shell"></script>
-  <script src="/settings.js"></script>
+  <script src="/settings.js?v=20260903-backup"></script>
 </body>
 </html>
