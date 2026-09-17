@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const style = document.createElement('link');
   style.rel = 'stylesheet';
-  style.href = '/sidebar.css?v=20260820-market-intelligence';
+  style.href = '/sidebar.css?v=20260917-layout';
   document.head.appendChild(style);
 
   const currentPath = decodeURIComponent(window.location.pathname).toLowerCase();
@@ -484,34 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const stationSection = currentPath.includes('directorio de estaciones') ||
-    currentPath.includes('/estacion/') || currentPath.includes('detalle del local');
-  const fixedDashboard = document.body.classList.contains('alerts-page') || currentPath.includes('/home/') || currentPath === '/' || currentPath.includes('calendario anual') || currentPath.includes('alerta nueva') || currentPath.includes('/configuracion/') || currentPath.includes('inteligencia de mercado') || currentPath.includes('admin vacantes');
-  if (!stationSection && !fixedDashboard) {
-    const fitPageToViewport = () => {
-      const page = document.querySelector('.rp-page-content');
-      if (!page) return;
-      const overflowAreas = [...page.querySelectorAll('[class*="overflow-y-auto"]')]
-        .filter((element) => element.offsetParent !== null);
-      let area = overflowAreas.sort((a, b) => b.scrollHeight - a.scrollHeight)[0];
-      if (page.classList.contains('settings-shell')) area = page.querySelector('.settings-grid');
-      if (!area) area = page.querySelector('main') || page;
-
-      area.style.zoom = '1';
-      area.style.width = '';
-      const top = area.getBoundingClientRect().top;
-      const availableHeight = Math.max(320, window.innerHeight - top - 10);
-      const naturalHeight = area.scrollHeight;
-      const scale = Math.min(1, availableHeight / Math.max(naturalHeight, 1));
-      page.classList.add('rp-screen-fixed');
-      area.classList.add('rp-fit-content');
-      area.style.setProperty('--rp-fit-scale', scale.toFixed(3));
-      area.style.zoom = scale.toFixed(3);
-      area.style.width = `${(100 / scale).toFixed(2)}%`;
-    };
-    window.setTimeout(fitPageToViewport, 120);
-    window.addEventListener('resize', fitPageToViewport);
-  }
+  // Keep the designed sizes; each module handles scrolling in its own layout.
   document.addEventListener('click', (event) => {
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     const link = event.target.closest('a[href]');
