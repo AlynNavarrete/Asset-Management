@@ -68,3 +68,40 @@ html.rp-dark #rent-calculation-dialog{color:#e8eef7;background:#17243a}html.rp-d
 
 /* Keep native control line heights from inflating printed text. */
 .rent-report-paper small,.rent-report-paper b,.rent-report-paper strong,.rent-report-paper span,.rent-report-paper p{line-height:1.25}
+.rent-approval-value{display:inline-flex;align-items:center;gap:9px;white-space:nowrap}
+.rent-approval-dot{display:inline-block;flex:0 0 9px;width:9px;height:9px;border-radius:50%;vertical-align:middle}
+.rent-approval-dot.is-approved{background:#12a46f;box-shadow:0 0 0 3px rgba(18,164,111,.13)}
+.rent-approval-dot.is-pending{background:#e5b11b;box-shadow:0 0 0 3px rgba(229,177,27,.16)}
+.rent-approval-dot:focus-visible{outline:2px solid #167cba;outline-offset:4px}
+.rent-approval-legend{display:flex;flex-wrap:wrap;gap:20px;padding:9px 18px;color:#52677d;font-size:12px;border-bottom:1px solid #dce5ee;background:#f8fafc}
+.rent-approval-legend>span{display:inline-flex;align-items:center;gap:8px}
+.approve-calculation{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:6px;padding:7px 10px;border:1px solid #b7dccb;border-radius:8px;color:#08734e;background:#eaf7f0;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+.approve-calculation .material-symbols-outlined{font-size:17px}
+#rent-approval-dialog{width:min(560px,calc(100vw - 28px));max-width:none;max-height:calc(100dvh - 28px);padding:0;border:0;border-radius:18px;color:#17243a;background:#fff;box-shadow:0 24px 80px #07142680;overflow:hidden}
+#rent-approval-dialog::backdrop{background:#071426ad;backdrop-filter:blur(4px)}
+.rent-approval-form{display:flex;flex-direction:column;max-height:calc(100dvh - 28px);margin:0}
+.rent-approval-form>header{display:flex;flex-shrink:0;align-items:center;justify-content:space-between;gap:15px;padding:18px 22px;color:#fff;background:linear-gradient(105deg,#123c83,#1887c8)}
+.rent-approval-form>header small{color:#c5ebfa;font-size:11px;font-weight:700;letter-spacing:.04em}
+.rent-approval-form h2{margin:3px 0 0;font-size:23px;font-weight:700}
+.rent-approval-form>header button{display:grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid #ffffff50;border-radius:50%;color:#fff;background:#ffffff12;cursor:pointer}
+.rent-approval-body{display:grid;gap:16px;overflow:auto;padding:20px 22px}
+.rent-approval-summary{display:grid;gap:4px;padding:14px;border:1px solid #cce3ef;border-radius:10px;color:#174b7d;background:#edf7fd}
+.rent-approval-summary b{font-size:23px}.rent-approval-summary span{font-size:13px}
+.rent-approval-body p{margin:0;color:#596c82;font-size:13px;line-height:1.5}
+.rent-approval-body label{display:grid;gap:7px;font-size:14px;font-weight:700}
+.rent-approval-body input,.rent-approval-body textarea{box-sizing:border-box;width:100%;padding:10px 12px;border:1px solid #bfcedf;border-radius:8px;color:#17243a;background:#fff;font:14px/1.5 Inter,sans-serif}
+.rent-approval-body textarea{resize:vertical;min-height:100px}
+.rent-approval-form>footer{display:flex;flex-shrink:0;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid #dce5ee}
+.rent-approval-form>footer button{padding:10px 14px;border:1px solid #c5d3e1;border-radius:9px;color:#334d69;background:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.rent-approval-form>footer button[type=submit]{color:#fff;border-color:#078356;background:#078356}
+.rent-approval-body #rent-approval-error{color:#b62434}.rent-approval-previous{padding:10px;border-left:3px solid #12a46f;background:#edf8f2;overflow-wrap:anywhere}
+html.rp-dark .rent-approval-legend{color:#c6d4e4;border-color:#34465f;background:#18263c}
+html.rp-dark .approve-calculation{color:#93e2bd;border-color:#3b765e;background:#193b32}
+html.rp-dark #rent-approval-dialog{color:#edf3fa;background:#17243a}
+html.rp-dark .rent-approval-summary{color:#cae7fa;border-color:#365975;background:#1d3852}
+html.rp-dark .rent-approval-body p{color:#b4c4d7}
+html.rp-dark .rent-approval-body input,html.rp-dark .rent-approval-body textarea{color:#edf3fa;border-color:#496079;background:#202f46}
+html.rp-dark .rent-approval-form>footer{border-color:#34465f}
+html.rp-dark .rent-approval-form>footer button[type=button]{color:#d7e6f6;border-color:#496079;background:#202f46}
+html.rp-dark .rent-approval-previous{background:#1b372f}
+@media(max-width:760px){.rent-calculator-modal>footer{flex-wrap:wrap}.rent-calculator-modal>footer>span{display:block;flex-basis:100%}.rent-calculator-modal>footer button{padding:8px;font-size:12px}.rent-approval-form>header,.rent-approval-body,.rent-approval-form>footer{padding:15px}}

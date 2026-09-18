@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   const pct=value=>`${value>=0?'+':''}${(value*100).toFixed(2)}%`;
   const median=values=>{const sorted=values.map(Number).sort((a,b)=>a-b);return sorted[Math.floor(sorted.length/2)]||0;};
   const safe=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
-  const storageKey='rp-vacancy-rent-calculations';
-  const readSaved=()=>{try{return JSON.parse(localStorage.getItem(storageKey)||'{}');}catch{return{};}};
-  const save=(local,data)=>{const all=readSaved();all[local]={...data,updatedAt:new Date().toISOString()};localStorage.setItem(storageKey,JSON.stringify(all));};
+  const rentStore=window.rpRentCalculations;
+  const readSaved=rentStore.read;
+  const save=rentStore.save;
   const defaults=(local,station,city,area,reference)=>{
     const seed=[...local].reduce((sum,char)=>sum+char.charCodeAt(0),0);
     const base=Number((reference/area).toFixed(2));let history=[];try{history=JSON.parse(localStorage.getItem('rp-former-tenants')||'[]');}catch{}
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const suggestedM2=data.rbComp*(1+hist)*(1+denue+physical),target=suggestedM2*data.area,floor=target*.90,publication=target*1.07;
     return{reason,histRaw,hist,denueRaw,denue,physicalRaw,physical,suggestedM2,target,floor,publication};
   };
-  const textField=(label,name,value,type='text')=>`<label><span>${label}</span><input name="${name}" type="${type}" value="${safe(value)}"></label>`;
+  const textField=(label,name,value,type='text')=>`<label><span>${label}</span><input name="${name}" type="${type}" ${type==='number'?'step="0.01" min="0"':''} value="${safe(value)}"></label>`;
   const field=(label,name,value,extra='')=>`<label><span>${label}</span><input name="${name}" type="number" step="0.01" value="${value}" ${extra}></label>`;
   const ensureDialog=()=>{let dialog=document.getElementById('rent-calculation-dialog');if(dialog)return dialog;dialog=document.createElement('dialog');dialog.id='rent-calculation-dialog';document.body.appendChild(dialog);dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});return dialog;};
   const reportHtml=(data,result)=>{
@@ -69,12 +69,51 @@ document.addEventListener('DOMContentLoaded',()=>{
     const data={...defaults(local,station,city,area,reference),...(savedInputs||{})};data.area=area;data.reference=reference;
     // Legacy numeric snapshots cannot be attributed to newly selected historical records.
     if(savedInputs) [1,2,3].forEach(i=>{if(!Object.prototype.hasOwnProperty.call(savedInputs,`compName${i}`)){data[`compName${i}`]='';data[`compBusiness${i}`]='';}});
-    const dialog=ensureDialog();dialog.innerHTML=`<section class="rent-calculator-modal"><header><div><small>CÁLCULO DE RENTA SUGERIDA</small><h2>${safe(local)} · ${safe(station)}</h2><p>Edita las variables y revisa el reporte en tiempo real.</p></div><button type="button" data-close-calculator aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header><div class="rent-calculator-layout"><aside><form id="rent-calculation-form"><fieldset><legend>Renta base e historial</legend>${field('Superficie del local (m²)','area',data.area,'readonly')}${field('Comparable 1 ($/m²)','comp1',data.comp1,'min="0"')}${field('Comparable 2 ($/m²)','comp2',data.comp2,'min="0"')}${field('Comparable 3 ($/m²)','comp3',data.comp3,'min="0"')}<label><span>Fecha comparable 1</span><input name="compDate1" type="date" value="${data.compDate1}"></label><label><span>Fecha comparable 2</span><input name="compDate2" type="date" value="${data.compDate2}"></label><label><span>Fecha comparable 3</span><input name="compDate3" type="date" value="${data.compDate3}"></label>${[1,2,3].map(i=>textField(`Local / estación / inquilino ${i}`,`compName${i}`,data[`compName${i}`])+textField(`Giro comercial ${i}`,`compBusiness${i}`,data[`compBusiness${i}`])).join('')}${textField('Último inquilino','previousTenant',data.previousTenant)}${textField('Renta previa mensual (MXN)','previousRent',data.previousRent,'number')}${textField('Fecha de salida','previousExitDate',data.previousExitDate,'date')}${textField('Motivo de desocupación registrado','previousExitReason',data.previousExitReason)}${field('Inflación acumulada (%)','inflation',data.inflation)}<label><span>Motivo aplicado al ajuste</span><select name="exitReason"><option>Quiebra por Renta Alta</option><option>Normal</option><option>Expansión</option><option>Incumplimiento</option><option>Reubicación</option><option>Fin de contrato</option><option>Otro</option></select></label></fieldset><fieldset><legend>DENUE · radio de 800 m</legend>${field('Densidad comercial local','localDensity',data.localDensity,'min="0"')}${field('Promedio de la ciudad','cityAverage',data.cityAverage,'min="1"')}${field('Saturación del giro (%)','saturation',data.saturation,'min="0" max="100"')}</fieldset><fieldset><legend>Inspección técnica · escala 1 a 5</legend>${field('Visibilidad · peso 2.5%','visibility',data.visibility,'min="1" max="5" step="1"')}${field('Estacionamiento · peso 2.0%','parking',data.parking,'min="1" max="5" step="1"')}${field('Ubicación interna · peso 2.5%','internalLocation',data.internalLocation,'min="1" max="5" step="1"')}${field('Estado físico · peso 3.0%','physicalState',data.physicalState,'min="1" max="5" step="1"')}</fieldset></form></aside><main id="rent-report-preview"></main></div><footer><span id="rent-calculation-saved">Cambios sin guardar</span><button type="button" data-close-calculator>Cancelar</button><button type="button" id="save-rent-calculation"><span class="material-symbols-outlined">save</span>Guardar cálculo</button><button type="button" id="download-rent-calculation"><span class="material-symbols-outlined">picture_as_pdf</span>Imprimir / Guardar PDF</button></footer></section>`;
+    const dialog=ensureDialog();dialog.innerHTML=`<section class="rent-calculator-modal"><header><div><small>CÁLCULO DE RENTA SUGERIDA</small><h2>${safe(local)} · ${safe(station)}</h2><p>Edita las variables y revisa el reporte en tiempo real.</p></div><button type="button" data-close-calculator aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header><div class="rent-calculator-layout"><aside><form id="rent-calculation-form"><fieldset><legend>Renta base e historial</legend>${field('Superficie del local (m²)','area',data.area,'readonly')}${field('Comparable 1 ($/m²)','comp1',data.comp1,'min="0"')}${field('Comparable 2 ($/m²)','comp2',data.comp2,'min="0"')}${field('Comparable 3 ($/m²)','comp3',data.comp3,'min="0"')}<label><span>Fecha comparable 1</span><input name="compDate1" type="date" value="${data.compDate1}"></label><label><span>Fecha comparable 2</span><input name="compDate2" type="date" value="${data.compDate2}"></label><label><span>Fecha comparable 3</span><input name="compDate3" type="date" value="${data.compDate3}"></label>${[1,2,3].map(i=>textField(`Local / estación / inquilino ${i}`,`compName${i}`,data[`compName${i}`])+textField(`Giro comercial ${i}`,`compBusiness${i}`,data[`compBusiness${i}`])).join('')}${textField('Último inquilino','previousTenant',data.previousTenant)}${textField('Renta previa mensual (MXN)','previousRent',data.previousRent,'number')}${textField('Fecha de salida','previousExitDate',data.previousExitDate,'date')}${textField('Motivo de desocupación registrado','previousExitReason',data.previousExitReason)}${field('Inflación acumulada (%)','inflation',data.inflation)}<label><span>Motivo aplicado al ajuste</span><select name="exitReason"><option>Quiebra por Renta Alta</option><option>Normal</option><option>Expansión</option><option>Incumplimiento</option><option>Reubicación</option><option>Fin de contrato</option><option>Otro</option></select></label></fieldset><fieldset><legend>DENUE · radio de 800 m</legend>${field('Densidad comercial local','localDensity',data.localDensity,'min="0"')}${field('Promedio de la ciudad','cityAverage',data.cityAverage,'min="1"')}${field('Saturación del giro (%)','saturation',data.saturation,'min="0" max="100"')}</fieldset><fieldset><legend>Inspección técnica · escala 1 a 5</legend>${field('Visibilidad · peso 2.5%','visibility',data.visibility,'min="1" max="5" step="1"')}${field('Estacionamiento · peso 2.0%','parking',data.parking,'min="1" max="5" step="1"')}${field('Ubicación interna · peso 2.5%','internalLocation',data.internalLocation,'min="1" max="5" step="1"')}${field('Estado físico · peso 3.0%','physicalState',data.physicalState,'min="1" max="5" step="1"')}</fieldset></form></aside><main id="rent-report-preview"></main></div><footer><span id="rent-calculation-saved">Cambios sin guardar</span><button type="button" data-close-calculator>Cancelar</button><button type="button" id="save-rent-calculation"><span class="material-symbols-outlined">save</span>Guardar cálculo</button><button type="button" id="approve-rent-calculation"><span class="material-symbols-outlined">task_alt</span>Aprobar Cálculo</button><button type="button" id="download-rent-calculation"><span class="material-symbols-outlined">picture_as_pdf</span>Imprimir / Guardar PDF</button></footer></section>`;
     const form=dialog.querySelector('form'),preview=dialog.querySelector('#rent-report-preview');form.elements.exitReason.value=data.exitReason;
     const current=()=>{const fd=new FormData(form),comp1=number(fd.get('comp1')),comp2=number(fd.get('comp2')),comp3=number(fd.get('comp3'));return{...data,...Object.fromEntries([...fd].filter(([key])=>/^(compName|compBusiness|previous)/.test(key))),comp1,comp2,comp3,compDate1:fd.get('compDate1'),compDate2:fd.get('compDate2'),compDate3:fd.get('compDate3'),rbComp:median([comp1,comp2,comp3]),inflation:number(fd.get('inflation')),exitReason:fd.get('exitReason'),localDensity:number(fd.get('localDensity')),cityAverage:Math.max(1,number(fd.get('cityAverage'),1)),saturation:clamp(number(fd.get('saturation')),0,100),visibility:clamp(number(fd.get('visibility')),1,5),parking:clamp(number(fd.get('parking')),1,5),internalLocation:clamp(number(fd.get('internalLocation')),1,5),physicalState:clamp(number(fd.get('physicalState')),1,5)};};
-    const update=()=>{const inputs=current();preview.innerHTML=reportHtml(inputs,calculate(inputs));dialog.querySelector('#rent-calculation-saved').textContent='Cambios sin guardar';};form.addEventListener('input',update);form.addEventListener('change',update);update();
+    const status=dialog.querySelector('#rent-calculation-saved');
+    const describeState=(inputs,result)=>{
+      const record=readSaved()[local],snapshot={inputs,outputs:result};
+      if(rentStore.isApproved(record)&&rentStore.fingerprint(record)===rentStore.fingerprint(snapshot)){
+        status.textContent=`Aprobado por ${record.approval.responsible} · ${new Date(record.approval.approvedAt).toLocaleString('es-MX')}`;
+      }else status.textContent=record&&rentStore.fingerprint(record)===rentStore.fingerprint(snapshot)?'Guardado · Pendiente de aprobación':'Cambios sin guardar · Pendiente de aprobación';
+    };
+    const update=()=>{const inputs=current(),result=calculate(inputs);preview.innerHTML=reportHtml(inputs,result);describeState(inputs,result);};
+    form.addEventListener('input',update);form.addEventListener('change',update);update();
     dialog.querySelectorAll('[data-close-calculator]').forEach(item=>item.addEventListener('click',()=>dialog.close()));
-    dialog.querySelector('#save-rent-calculation').addEventListener('click',()=>{const inputs=current(),result=calculate(inputs);save(local,{inputs,outputs:result});cells[6].innerHTML=`<span class="calculation-complete">${money(result.target)}<small>${money(result.suggestedM2,2)}/m²</small></span>`;dialog.querySelector('#rent-calculation-saved').textContent=`Guardado ${new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}`;});
+    const validSnapshot=()=>{
+      if(!form.reportValidity())return null;
+      const inputs=current(),outputs=calculate(inputs);
+      if(!Number.isFinite(outputs.target)||outputs.target<=0){status.textContent='La renta sugerida debe ser mayor que cero.';return null;}
+      return {inputs,outputs};
+    };
+    dialog.querySelector('#save-rent-calculation').addEventListener('click',()=>{
+      const snapshot=validSnapshot();if(!snapshot)return;
+      try{save(local,snapshot);describeState(snapshot.inputs,snapshot.outputs);}catch{status.textContent='No se pudo guardar el cálculo. Revisa el almacenamiento del navegador.';}
+    });
+    const openApproval=()=>{
+      const snapshot=validSnapshot();if(!snapshot)return;
+      let approvalDialog=document.getElementById('rent-approval-dialog');
+      if(!approvalDialog){approvalDialog=document.createElement('dialog');approvalDialog.id='rent-approval-dialog';approvalDialog.setAttribute('aria-labelledby','rent-approval-title');document.body.appendChild(approvalDialog);approvalDialog.addEventListener('click',event=>{if(event.target===approvalDialog)approvalDialog.close();});}
+      const savedVersion=JSON.stringify(readSaved()[local]||null);
+      const previous=readSaved()[local]?.approval;
+      approvalDialog.innerHTML=`<form class="rent-approval-form"><header><div><small>AUTORIZACIÓN DE RENTA SUGERIDA</small><h2 id="rent-approval-title">Aprobar Cálculo</h2></div><button type="button" data-close-approval aria-label="Cerrar aprobación"><span class="material-symbols-outlined">close</span></button></header><div class="rent-approval-body"><div class="rent-approval-summary"><strong>${safe(local)} · ${safe(station)}</strong><b>${money(snapshot.outputs.target,2)} MXN/mes</b><span>${money(snapshot.outputs.suggestedM2,2)}/m² · ${snapshot.inputs.area} m²</span></div><p>Se guardará y aprobará este cálculo. Si después cambian sus datos, será necesaria una nueva aprobación.</p>${previous?`<p class="rent-approval-previous">Última aprobación: ${safe(previous.responsible)} · ${new Date(previous.approvedAt).toLocaleString('es-MX')}<br>${safe(previous.declaration)}</p>`:''}<label for="rent-approval-responsible">Responsable de Aprobación<input id="rent-approval-responsible" name="responsible" required maxlength="120" autocomplete="name" placeholder="Nombre completo del responsable"></label><label for="rent-approval-declaration">Declaración de Conformidad<textarea id="rent-approval-declaration" name="declaration" required maxlength="2000" rows="4" placeholder="Declaro que he revisado el cálculo y estoy conforme con la renta sugerida."></textarea></label><p id="rent-approval-error" role="alert" hidden></p></div><footer><button type="button" data-close-approval>Cancelar</button><button type="submit">Confirmar aprobación</button></footer></form>`;
+      approvalDialog.querySelectorAll('[data-close-approval]').forEach(item=>item.addEventListener('click',()=>approvalDialog.close()));
+      approvalDialog.querySelector('form').addEventListener('submit',event=>{
+        event.preventDefault();const fields=new FormData(event.currentTarget);
+        try{
+          // Another tab may have changed the saved calculation while this dialog was open.
+          const now=current();if(rentStore.fingerprint({inputs:now,outputs:calculate(now)})!==rentStore.fingerprint(snapshot))throw new Error('El cálculo cambió. Cierra y revisa la renta antes de aprobar.');
+          if(JSON.stringify(readSaved()[local]||null)!==savedVersion)throw new Error('El cálculo guardado cambió en otra ventana. Cierra y vuelve a abrirlo antes de aprobar.');
+          rentStore.approve(local,snapshot,{responsible:fields.get('responsible'),declaration:fields.get('declaration')});
+          approvalDialog.close();describeState(snapshot.inputs,snapshot.outputs);
+        }catch(error){const message=approvalDialog.querySelector('#rent-approval-error');message.hidden=false;message.textContent=error.message;}
+      });
+      approvalDialog.showModal();
+    };
+    dialog.querySelector('#approve-rent-calculation').addEventListener('click',openApproval);
+
     dialog.querySelector('#download-rent-calculation').addEventListener('click',async()=>{
       const paper=preview.querySelector('.rent-report-paper');
       await document.fonts.ready;
@@ -86,7 +125,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
       // Native print retains searchable text, embedded fonts and exact Letter page geometry.
       window.print();
-    });dialog.showModal();
+    });dialog.showModal();if(button.classList.contains('approve-calculation'))openApproval();
   };
-  document.addEventListener('click',event=>{const button=event.target.closest('.view-calculation[data-local]');if(button)openCalculator(button);});
+  document.addEventListener('click',event=>{const button=event.target.closest('.view-calculation[data-local],.approve-calculation[data-local]');if(button)openCalculator(button);});
 });
