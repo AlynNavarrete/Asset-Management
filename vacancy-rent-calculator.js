@@ -98,7 +98,14 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(!approvalDialog){approvalDialog=document.createElement('dialog');approvalDialog.id='rent-approval-dialog';approvalDialog.setAttribute('aria-labelledby','rent-approval-title');document.body.appendChild(approvalDialog);approvalDialog.addEventListener('click',event=>{if(event.target===approvalDialog)approvalDialog.close();});}
       const savedVersion=JSON.stringify(readSaved()[local]||null);
       const previous=readSaved()[local]?.approval;
-      approvalDialog.innerHTML=`<form class="rent-approval-form"><header><div><small>AUTORIZACIÓN DE RENTA SUGERIDA</small><h2 id="rent-approval-title">Aprobar Cálculo</h2></div><button type="button" data-close-approval aria-label="Cerrar aprobación"><span class="material-symbols-outlined">close</span></button></header><div class="rent-approval-body"><div class="rent-approval-summary"><strong>${safe(local)} · ${safe(station)}</strong><b>${money(snapshot.outputs.target,2)} MXN/mes</b><span>${money(snapshot.outputs.suggestedM2,2)}/m² · ${snapshot.inputs.area} m²</span></div><p>Se guardará y aprobará este cálculo. Si después cambian sus datos, será necesaria una nueva aprobación.</p>${previous?`<p class="rent-approval-previous">Última aprobación: ${safe(previous.responsible)} · ${new Date(previous.approvedAt).toLocaleString('es-MX')}<br>${safe(previous.declaration)}</p>`:''}<label for="rent-approval-responsible">Responsable de Aprobación<input id="rent-approval-responsible" name="responsible" required maxlength="120" autocomplete="name" placeholder="Nombre completo del responsable"></label><label for="rent-approval-declaration">Declaración de Conformidad<textarea id="rent-approval-declaration" name="declaration" required maxlength="2000" rows="4" placeholder="Declaro que he revisado el cálculo y estoy conforme con la renta sugerida."></textarea></label><p id="rent-approval-error" role="alert" hidden></p></div><footer><button type="button" data-close-approval>Cancelar</button><button type="submit">Confirmar aprobación</button></footer></form>`;
+      let systemUsers=[];
+      try{const saved=JSON.parse(localStorage.getItem('rp-system-users')||'[]');if(Array.isArray(saved))systemUsers=saved;}catch{}
+      const currentName=localStorage.getItem('rp-user-name')||'Alyn';
+      const currentInactive=systemUsers.some(user=>user.name===currentName&&user.status==='Inactivo');
+      const responsibleNames=[...new Set([...(currentInactive?[]:[currentName]),...systemUsers.filter(user=>user.status!=='Inactivo').map(user=>user.name)].filter(name=>typeof name==='string'&&name.trim()))];
+      const conformity='He revisado el cálculo de la renta sugerida, comprendo sus ajustes y estoy de acuerdo con el resultado para autorizar su aprobación.';
+
+      approvalDialog.innerHTML=`<form class="rent-approval-form"><header><div><small>AUTORIZACIÓN DE RENTA SUGERIDA</small><h2 id="rent-approval-title">Aprobar Cálculo</h2></div><button type="button" data-close-approval aria-label="Cerrar aprobación"><span class="material-symbols-outlined">close</span></button></header><div class="rent-approval-body"><div class="rent-approval-summary"><strong>${safe(local)} · ${safe(station)}</strong><b>${money(snapshot.outputs.target,2)} MXN/mes</b><span>${money(snapshot.outputs.suggestedM2,2)}/m² · ${snapshot.inputs.area} m²</span></div><p>Se guardará y aprobará este cálculo. Si después cambian sus datos, será necesaria una nueva aprobación.</p>${previous?`<p class="rent-approval-previous">Última aprobación: ${safe(previous.responsible)} · ${new Date(previous.approvedAt).toLocaleString('es-MX')}<br>${safe(previous.declaration)}</p>`:''}<section class="rent-approval-step"><h3><span>1</span><label for="rent-approval-responsible">Responsable que firma</label></h3><p>Selecciona un usuario del sistema.</p><select id="rent-approval-responsible" name="responsible" required aria-label="Responsable que firma">${responsibleNames.length?responsibleNames.map(name=>`<option value="${safe(name)}">${safe(name)}</option>`).join(''):'<option value="">No hay usuarios activos disponibles</option>'}</select></section><section class="rent-approval-step"><h3><span>2</span>Declaración de conformidad</h3><p>Confirma que el cálculo fue revisado.</p><label class="rent-approval-consent"><input id="rent-approval-consent" name="consent" type="checkbox" required><span>${conformity}</span></label></section><p id="rent-approval-error" role="alert" hidden></p></div><footer><button type="button" data-close-approval>Cancelar</button><button type="submit">Confirmar aprobación</button></footer></form>`;
       approvalDialog.querySelectorAll('[data-close-approval]').forEach(item=>item.addEventListener('click',()=>approvalDialog.close()));
       approvalDialog.querySelector('form').addEventListener('submit',event=>{
         event.preventDefault();const fields=new FormData(event.currentTarget);
@@ -106,7 +113,8 @@ document.addEventListener('DOMContentLoaded',()=>{
           // Another tab may have changed the saved calculation while this dialog was open.
           const now=current();if(rentStore.fingerprint({inputs:now,outputs:calculate(now)})!==rentStore.fingerprint(snapshot))throw new Error('El cálculo cambió. Cierra y revisa la renta antes de aprobar.');
           if(JSON.stringify(readSaved()[local]||null)!==savedVersion)throw new Error('El cálculo guardado cambió en otra ventana. Cierra y vuelve a abrirlo antes de aprobar.');
-          rentStore.approve(local,snapshot,{responsible:fields.get('responsible'),declaration:fields.get('declaration')});
+          if(!fields.has('consent')||!responsibleNames.includes(fields.get('responsible')))throw new Error('Selecciona un responsable y confirma la declaración de conformidad.');
+          rentStore.approve(local,snapshot,{responsible:fields.get('responsible'),declaration:conformity});
           approvalDialog.close();describeState(snapshot.inputs,snapshot.outputs);
         }catch(error){const message=approvalDialog.querySelector('#rent-approval-error');message.hidden=false;message.textContent=error.message;}
       });
@@ -125,7 +133,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
       // Native print retains searchable text, embedded fonts and exact Letter page geometry.
       window.print();
-    });dialog.showModal();if(button.classList.contains('approve-calculation'))openApproval();
+    });dialog.showModal();
   };
-  document.addEventListener('click',event=>{const button=event.target.closest('.view-calculation[data-local],.approve-calculation[data-local]');if(button)openCalculator(button);});
+  document.addEventListener('click',event=>{const button=event.target.closest('.view-calculation[data-local]');if(button)openCalculator(button);});
 });

@@ -25,6 +25,7 @@
     const record=read()[local],approved=isApproved(record);
     const label=approved?`Renta aprobada por ${record.approval.responsible} · ${new Date(record.approval.approvedAt).toLocaleString('es-MX')}`:'Renta pendiente de aprobación';
     const value=Number.isFinite(record?.outputs?.target)?record.outputs.target:fallback;
+    if(!Number.isFinite(value))return '<span class="rent-calculation-placeholder">Pendiente de cálculo</span>';
     const amount=Number.isFinite(value)?value.toLocaleString('es-MX',{style:'currency',currency:'MXN',minimumFractionDigits:record?2:0,maximumFractionDigits:record?2:0}):'Pendiente de cálculo';
     return `<span class="rent-approval-value"><span class="rent-approval-dot ${approved?'is-approved':'is-pending'}" role="img" aria-label="${escape(label)}" title="${escape(label)}" tabindex="0"></span><span>${amount}</span></span>`;
   };
