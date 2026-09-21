@@ -244,7 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const approved = view === 'approved';
     const commercial = view === 'commercial';
     const calculation = view === 'calculation';
-    if (available) renderAvailableTable(); else if (approved) renderApprovedProposals(); else if(commercial) renderCommercialFollowup(); else if(calculation) renderVacancyCalculation(); else renderSummaryTable();
+    try {
+      if (available) renderAvailableTable(); else if (approved) renderApprovedProposals(); else if(commercial) renderCommercialFollowup(); else if(calculation) renderVacancyCalculation(); else renderSummaryTable();
+    } finally {
+      tableCard.removeAttribute('aria-busy');
+      pendingViewFrame=0;
+    }
     tableCard.classList.toggle('is-available-view', available);
     tableCard.classList.toggle('is-approved-view', approved);
     tableCard.classList.toggle('is-commercial-view', commercial);
@@ -258,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (view === activeView && !pendingViewFrame) return;
     tabs.querySelectorAll('button').forEach((button) => button.classList.toggle('is-active', button.dataset.vacancyView === view));
     summaryCards.hidden = true;
-    tableCard.classList.add('is-changing-view');
     tableCard.setAttribute('aria-busy','true');
     if (pendingViewFrame) cancelAnimationFrame(pendingViewFrame);
     if (immediate) { renderView(view); return; }

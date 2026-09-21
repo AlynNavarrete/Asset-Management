@@ -1,15 +1,13 @@
-(() => {
+﻿(() => {
   const root = document.documentElement;
+  try { root.classList.toggle('rp-dark',localStorage.getItem('rp-theme')==='dark'); } catch {}
   root.classList.add('rp-app-loading');
-  let revealed = false;
   window.rpRevealApp = () => {
-    if (revealed) return;
-    revealed = true;
     root.classList.remove('rp-app-loading');
     root.classList.add('rp-app-ready');
   };
-  window.setTimeout(window.rpRevealApp, 5000);
-  document.addEventListener('DOMContentLoaded', () => {
-    window.setTimeout(window.rpRevealApp, 1200);
-  }, { once:true });
+  // Finish the synchronous module setup before showing the already-styled document.
+  document.addEventListener('DOMContentLoaded', () => queueMicrotask(window.rpRevealApp), {once:true});
+  // A page restored by Back/Forward must never retain a loading mask.
+  window.addEventListener('pageshow', window.rpRevealApp);
 })();

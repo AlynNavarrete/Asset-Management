@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const stylesheet = document.createElement('link'); stylesheet.rel = 'stylesheet'; stylesheet.href = '/home.css?v=20260917-home-layout'; document.head.appendChild(stylesheet);
   const main = document.querySelector('.rp-page-content main');
   if (!main) return;
   document.body.classList.add('home-page');

@@ -16,11 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (value === 'J. Director') element.textContent = currentUser;
     if (value === 'EU' || value === 'US') element.textContent = 'AL';
   });
-  const style = document.createElement('link');
-  style.rel = 'stylesheet';
-  style.href = '/sidebar.css?v=20260917-layout';
-  document.head.appendChild(style);
-
   const currentPath = decodeURIComponent(window.location.pathname).toLowerCase();
   if (currentPath.includes('calendario anual')) document.body.classList.add('calendar-annual-page');
   if (currentPath.includes('alerta nueva')) document.body.classList.add('new-alert-page');
@@ -484,14 +479,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Keep the designed sizes; each module handles scrolling in its own layout.
-  document.addEventListener('click', (event) => {
-    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-    const link = event.target.closest('a[href]');
-    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
-    const destination = new URL(link.href, window.location.href);
-    if (destination.origin !== window.location.origin || destination.href === window.location.href || destination.hash) return;
-    document.documentElement.classList.add('rp-app-loading');
+  // Warm only an explicitly hovered/focused internal section; keep native browser navigation.
+  const warmed=new Set();
+  const warmSection=event=>{
+    if(navigator.connection?.saveData)return;
+    const link=event.target.closest('#rp-sidebar a[href],.rp-module-tabs a[href]');
+    if(!link)return;
+    const url=new URL(link.href,location.href);
+    if(url.origin!==location.origin||!url.pathname.endsWith('/code.html')||url.href===location.href||warmed.has(url.href)||warmed.size>=8)return;
+    warmed.add(url.href);const hint=document.createElement('link');hint.rel='prefetch';hint.href=url.href;document.head.appendChild(hint);
+  };
+  document.addEventListener('pointerover',warmSection,{passive:true});
+  document.addEventListener('focusin',warmSection);
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('#rp-sidebar a[href],.rp-module-tabs a[href]');
+    if(link&&link.href===location.href&&!event.ctrlKey&&!event.metaKey&&!event.shiftKey&&!event.altKey&&event.button===0)event.preventDefault();
   });
   window.rpRevealApp?.();
 });

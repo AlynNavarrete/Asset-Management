@@ -1,11 +1,18 @@
 ﻿(() => {
   const key = 'rp-vacancy-rent-calculations';
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const read = () => { try { const value=JSON.parse(localStorage.getItem(key)||'{}');return value && typeof value==='object' && !Array.isArray(value) ? value : {}; } catch { return {}; } };
+  let cachedRaw=null,cachedRecords={};
+  const read = () => {
+    try {
+      const raw=localStorage.getItem(key)||'{}';
+      if(raw!==cachedRaw){const value=JSON.parse(raw);cachedRecords=value&&typeof value==='object'&&!Array.isArray(value)?value:{};cachedRaw=raw;}
+      return cachedRecords;
+    } catch { return {}; }
+  };
   const fingerprint = data => JSON.stringify(['inputs','outputs'].map(section=>Object.entries(data?.[section]||{}).sort(([a],[b])=>a.localeCompare(b)).map(([name,value])=>[name,String(value??'')])));
   const isApproved = record => Boolean(record?.approval?.responsible && record.approval.declaration && record.approval.fingerprint===fingerprint(record));
   const write = (local, data, approval) => {
-    const all=read(), previous=all[local], now=new Date().toISOString();
+    const all={...read()}, previous=all[local], now=new Date().toISOString();
     const unchanged=previous && fingerprint(previous)===fingerprint(data);
     const history=[...(previous?.approvalHistory||[])];
     if(previous?.approval && (!unchanged || approval)) history.push({...previous.approval,supersededAt:now,reason:unchanged?'Nueva aprobación':'Cálculo modificado'});
