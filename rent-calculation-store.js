@@ -9,7 +9,8 @@
       return cachedRecords;
     } catch { return {}; }
   };
-  const fingerprint = data => JSON.stringify(['inputs','outputs'].map(section=>Object.entries(data?.[section]||{}).sort(([a],[b])=>a.localeCompare(b)).map(([name,value])=>[name,String(value??'')])));
+  const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,stable(value[key])])):value;
+  const fingerprint = data => JSON.stringify(['inputs','outputs'].map(section=>Object.entries(data?.[section]||{}).sort(([a],[b])=>a.localeCompare(b)).map(([name,value])=>[name,value&&typeof value==='object'?JSON.stringify(stable(value)):String(value??'')])));
   const isApproved = record => Boolean(record?.approval?.responsible && record.approval.declaration && record.approval.fingerprint===fingerprint(record));
   const write = (local, data, approval) => {
     const all={...read()}, previous=all[local], now=new Date().toISOString();

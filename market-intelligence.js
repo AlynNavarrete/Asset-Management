@@ -69,6 +69,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }else document.getElementById('denue-map').innerHTML='<p style="padding:20px;color:#9fb0c9">El mapa necesita conexión para cargar la cartografía interactiva.</p>';
 
   const counts=categories.map((category)=>({ ...category,count:points.filter((point)=>point.category===category.key).length })).sort((a,b)=>b.count-a.count);
+  // Share only actual DENUE observations; demo points must never become audited market inputs.
+  if(liveDenue){
+    const distance=point=>{const rad=value=>value*Math.PI/180,dlat=rad(point.lat-data.lat),dlng=rad(point.lng-data.lng);return 6371000*2*Math.atan2(Math.sqrt(Math.sin(dlat/2)**2+Math.cos(rad(data.lat))*Math.cos(rad(point.lat))*Math.sin(dlng/2)**2),Math.sqrt(Math.max(0,1-(Math.sin(dlat/2)**2+Math.cos(rad(data.lat))*Math.cos(rad(point.lat))*Math.sin(dlng/2)**2))));};
+    const nearby=points.filter(point=>distance(point)<=800);
+    try{localStorage.setItem('rp-denue-analysis:'+data.station+':'+data.local,JSON.stringify({source:'DENUE',radius:800,observedAt:new Date().toISOString(),total:nearby.length,counts:categories.map(category=>({key:category.key,count:nearby.filter(point=>point.category===category.key).length}))}));}catch{}
+  }
   const predominant=counts[0]; const share=Math.round((predominant.count/points.length)*100);
   document.getElementById('density-value').textContent=points.length;
   document.getElementById('density-label').textContent=points.length>35?'Alta':points.length>18?'Media alta':'Media';

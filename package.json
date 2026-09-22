@@ -5,7 +5,8 @@
   "main": "alerts-dashboard.js",
   "scripts": {
     "build:styles": "node scripts/build-styles.cjs",
-    "test": "node tests/navigation.cjs"
+    "test": "node tests/navigation.cjs",
+    "test:rent": "node tests/rent-model.cjs && node tests/rent-editor.cjs && node tests/rent-sources.cjs"
   },
   "keywords": [],
   "author": "",
