@@ -1,5 +1,7 @@
 # Asset-Management
 
+El botón **Descargar PDF** del cálculo de renta genera directamente `Calculo Renta-<local>.pdf`, en una hoja carta. La descarga conserva el diseño como imagen de alta resolución, con logo y fuente incorporados. `node tests/rent-download.cjs` verifica el nombre, la descarga sin impresión y el tamaño de página; admite `CHECK_BASE` para probar Vercel.
+
 Sitio estático. Para servirlo localmente en Windows: `powershell -ExecutionPolicy Bypass -File serve.ps1` y abrir `http://localhost:8000`.
 
 Los estilos Tailwind se generan antes de publicar, sin compilación en el navegador. Después de cambiar clases HTML/JavaScript o los temas de `styles/pages.json`, ejecutar:

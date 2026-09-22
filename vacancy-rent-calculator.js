@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const dialog=ensureDialog();dialog.innerHTML=`<section class="rent-calculator-modal"><header><div><small>CÁLCULO DE RENTA SUGERIDA</small><h2>${safe(local)} · ${safe(station)}</h2><p>Edita las variables y revisa el reporte en tiempo real.</p></div><button type="button" data-close-calculator aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></header><div class="rent-calculator-layout"><aside><form id="rent-calculation-form"><details class="rent-editor-section" open><summary>A · Comparables y Mercado</summary><fieldset><legend>Renta por m²</legend>${[1,2,3].map(i=>field('Comparable '+i+' ($/m²)','comp'+i,data['comp'+i],'min="0.01" required')).join('')}<label><span>Giro Comercial Sugerido</span><select name="suggestedBusiness">${model.categories.map(c=>'<option value="'+c.key+'">'+c.label+'</option>').join('')}</select></label><p class="rent-editor-note" id="rent-market-note"></p><details class="rent-editor-more"><summary>Identidad, facturas y conteos</summary>${[1,2,3].map(i=>textField('Local / estación / inquilino '+i,'compName'+i,data['compName'+i])+textField('Giro del comparable '+i,'compBusiness'+i,data['compBusiness'+i])+textField('Última factura / ajuste '+i,'compDate'+i,data['compDate'+i],'date')).join('')}${field('Negocios en radio de 800 m','localDensity',data.localDensity,'min="0" step="1" required')}${field('Promedio de negocios en la ciudad','cityAverage',data.cityAverage,'min="0" required')}${field('Negocios del giro seleccionado','businessCount',data.marketCounts[data.suggestedBusiness]||0,'min="0" step="1" required')}<p class="rent-editor-note">Saturación = negocios del giro ÷ total × 100. Registra conteos verificables; sin datos se omite este componente.</p></details></fieldset></details>
 <details class="rent-editor-section"><summary>B · Historial e Inflación</summary><fieldset><legend>Referencia temporal</legend>${field('Inflación Acumulada (%)','inflation',data.inflation,'min="-100" max="100" required')}<p class="rent-editor-note" id="rent-inflation-note"></p><label><span>Motivo de Desocupación</span><select name="exitReason"><option value="Normal">Salida Normal</option><option value="Quiebra por Renta Alta">Quiebra por renta alta</option><option value="Expansión">Expansión/Traspaso</option>${!['Normal','Quiebra por Renta Alta','Expansión'].includes(data.exitReason)?'<option>'+safe(data.exitReason)+'</option>':''}</select></label><details class="rent-editor-more"><summary>Antecedente del contrato</summary>${textField('Último inquilino','previousTenant',data.previousTenant)}${textField('Renta previa mensual (MXN)','previousRent',data.previousRent,'number')}${textField('Fecha de salida','previousExitDate',data.previousExitDate,'date')}${textField('Motivo registrado','previousExitReason',data.previousExitReason)}</details></fieldset></details>
 <details class="rent-editor-section"><summary>C · Estado Físico</summary><fieldset><legend>Escala de 1 a 5</legend>${[['Visibilidad','visibility'],['Estacionamiento','parking'],['Ubicación Interna','internalLocation'],['Estado Físico','physicalState']].map(([label,key])=>'<label><span>'+label+'</span><select name="'+key+'">'+[1,2,3,4,5].map(n=>'<option value="'+n+'" '+(Number(data[key])===n?'selected':'')+'>'+n+'/5'+(n===1?' · Desfavorable':n===3?' · Neutro':n===5?' · Favorable':'')+'</option>').join('')+'</select></label>').join('')}</fieldset></details>
-<details class="rent-editor-section"><summary>D · Margen Comercial</summary><fieldset><legend>Rango de negociación</legend>${field('Margen de Negociación (%)','negotiationMargin',data.negotiationMargin,'min="0" max="100" required')}<p class="rent-editor-note">Diferencia entre piso y salida, como porcentaje del objetivo. Se distribuye la mitad hacia abajo y la mitad hacia arriba.</p></fieldset></details></form></aside><main id="rent-report-preview"></main></div><footer><span id="rent-calculation-saved">Cambios sin guardar</span><button type="button" data-close-calculator>Cancelar</button><button type="button" id="save-rent-calculation"><span class="material-symbols-outlined">save</span>Guardar cálculo</button><button type="button" id="approve-rent-calculation"><span class="material-symbols-outlined">task_alt</span>Aprobar Cálculo</button><button type="button" id="download-rent-calculation"><span class="material-symbols-outlined">picture_as_pdf</span>Imprimir / Guardar PDF</button></footer></section>`;
+<details class="rent-editor-section"><summary>D · Margen Comercial</summary><fieldset><legend>Rango de negociación</legend>${field('Margen de Negociación (%)','negotiationMargin',data.negotiationMargin,'min="0" max="100" required')}<p class="rent-editor-note">Diferencia entre piso y salida, como porcentaje del objetivo. Se distribuye la mitad hacia abajo y la mitad hacia arriba.</p></fieldset></details></form></aside><main id="rent-report-preview"></main></div><footer><span id="rent-calculation-saved">Cambios sin guardar</span><button type="button" data-close-calculator>Cancelar</button><button type="button" id="save-rent-calculation"><span class="material-symbols-outlined">save</span>Guardar cálculo</button><button type="button" id="approve-rent-calculation"><span class="material-symbols-outlined">task_alt</span>Aprobar Cálculo</button><button type="button" id="download-rent-calculation"><span class="material-symbols-outlined">picture_as_pdf</span>Descargar PDF</button></footer></section>`;
     const form=dialog.querySelector('form'),preview=dialog.querySelector('#rent-report-preview');form.elements.exitReason.value=data.exitReason;form.elements.suggestedBusiness.value=data.suggestedBusiness;
     form.querySelectorAll('[name^="compDate"]').forEach(input=>input.max=model.today());
     form.addEventListener('submit',event=>event.preventDefault());
@@ -183,7 +183,12 @@ document.addEventListener('DOMContentLoaded',()=>{
     };
     dialog.querySelector('#approve-rent-calculation').addEventListener('click',openApproval);
 
-    dialog.querySelector('#download-rent-calculation').addEventListener('click',async()=>{
+    dialog.querySelector('#download-rent-calculation').addEventListener('click',async event=>{
+      const button=event.currentTarget;
+      if(button.disabled)return;
+      const original=button.innerHTML;
+      button.disabled=true;button.textContent='Preparando PDF…';
+      try{
       const paper=preview.querySelector('.rent-report-paper');
       await document.fonts.ready;
       const footerBottom=paper.lastElementChild.getBoundingClientRect().bottom-paper.getBoundingClientRect().top;
@@ -192,8 +197,27 @@ document.addEventListener('DOMContentLoaded',()=>{
         dialog.querySelector('#rent-calculation-saved').textContent='El texto excede una hoja carta. Abrevia los campos extensos antes de imprimir.';
         return;
       }
-      // Native print retains searchable text, embedded fonts and exact Letter page geometry.
-      window.print();
+      await window.rpLoadRentPdf();
+      const [logo,font]=await window.rpRentPdfArtwork();
+      const canvas=await window.html2canvas(paper,{scale:3,backgroundColor:'#ffffff',foreignObjectRendering:true,logging:false,
+        onclone:document=>{
+          const copy=document.querySelector('.rent-report-paper');
+          // Capture the whole sheet independently of the editor's scroll position and modal clipping.
+          document.body.appendChild(copy);
+          copy.querySelectorAll('table,thead,tbody,tr,th,td,caption').forEach(element=>{element.style.height='auto';});
+          copy.querySelector('img').src=logo;
+          const fonts=document.createElement('style');
+          fonts.textContent=`@font-face{font-family:Inter;font-style:normal;font-weight:400 800;src:url(${font}) format('woff2')}`;
+          copy.prepend(fonts);
+          copy.style.cssText+=';position:fixed;left:0;top:0;margin:0;z-index:2147483647;box-shadow:none';
+          document.querySelector('#rent-calculation-dialog')?.remove();
+        }});
+      const pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'pt',format:'letter',compress:true});
+      pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,612,792);
+      const name=String(local).replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/g,'').trim()||'Local';
+      pdf.save(`Calculo Renta-${name}.pdf`);
+      }catch(error){status.textContent='No se pudo descargar el PDF. Intenta nuevamente.';console.error('Error al generar el reporte PDF',error);}
+      finally{button.disabled=false;button.innerHTML=original;}
     });dialog.showModal();
   };
   document.addEventListener('click',event=>{const button=event.target.closest('.view-calculation[data-local]');if(button)openCalculator(button);});
