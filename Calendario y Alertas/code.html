@@ -7,7 +7,7 @@
   <title>Calendario y Alertas - Asset Management Comercial</title>
   <link rel="stylesheet" href="/assets/styles/calendario-y-alertas.css?v=20260921">
   <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260921">
-  <link rel="stylesheet" href="/alerts-dashboard.css?v=20260901-dynamic-increase-status">
+  <link rel="stylesheet" href="/alerts-dashboard.css?v=20260922-inpc">
   <link rel="stylesheet" href="/alerts-dashboard-layout.css?v=20260826-no-horizontal-scroll">
   <link rel="stylesheet" href="/alerts-table-gradient.css?v=20260827-uniform">
 <link rel="stylesheet" href="/sidebar.css?v=20260921-fast-navigation">
@@ -36,12 +36,12 @@
       <section class="dashboard-card contracts-card">
         <div class="contracts-heading"><div><h2>Aniversarios de Contratos</h2><label>Ordenar por <select id="sort-contracts"><option value="date">Fecha</option><option value="name">Contrato</option><option value="rent">Renta</option></select></label></div><button id="add-contract" class="primary-button" type="button"><span class="material-symbols-outlined">add_circle</span>Agregar contrato</button></div>
         <div class="table-wrap"><table><thead><tr><th>Contrato</th><th>Fecha</th><th>Renta</th><th>Incremento</th></tr></thead><tbody id="contracts-body">
-          <tr data-date="2026-09-10" data-rent="24450.15"><td><strong>Bike Line</strong><small>La Marina</small></td><td>10 Sep 2026</td><td>$24,450.15<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
-          <tr data-date="2026-09-15" data-rent="9482.76"><td><strong>Restaurant</strong><small>Los Cardones</small></td><td>15 Sep 2026</td><td>$9,482.76<small>sin IVA</small></td><td><span class="status done">Hecho</span></td></tr>
-          <tr data-date="2026-10-01" data-rent="28619.39"><td><strong>OXXO</strong><small>Foresta</small></td><td>1 Oct 2026</td><td>$28,619.39<small>sin IVA</small></td><td><span class="status done">Hecho</span></td></tr>
-          <tr data-date="2026-10-01" data-rent="80111.91"><td><strong>Rico’s</strong><small>La Marina</small></td><td>1 Oct 2026</td><td>$80,111.91<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
-          <tr data-date="2026-12-31" data-rent="33186.81"><td><strong>OXXO</strong><small>Revolución</small></td><td>31 Dic 2026</td><td>$33,186.81<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
-          <tr class="extra-row" data-date="2027-01-15" data-rent="18750"><td><strong>Farmacia</strong><small>Cerritos</small></td><td>15 Ene 2027</td><td>$18,750.00<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
+          <tr data-date="2026-09-10" data-rent="24450.15"><td><strong>Bike Line</strong><small>La Marina</small></td><td>10/09/2026</td><td>$24,450.15<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
+          <tr data-date="2026-09-15" data-rent="9482.76"><td><strong>Restaurant</strong><small>Los Cardones</small></td><td>15/09/2026</td><td>$9,482.76<small>sin IVA</small></td><td><span class="status done">Hecho</span></td></tr>
+          <tr data-date="2026-10-01" data-rent="28619.39"><td><strong>OXXO</strong><small>Foresta</small></td><td>01/10/2026</td><td>$28,619.39<small>sin IVA</small></td><td><span class="status done">Hecho</span></td></tr>
+          <tr data-date="2026-10-01" data-rent="80111.91"><td><strong>Rico’s</strong><small>La Marina</small></td><td>01/10/2026</td><td>$80,111.91<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
+          <tr data-date="2026-12-31" data-rent="33186.81"><td><strong>OXXO</strong><small>Revolución</small></td><td>31/12/2026</td><td>$33,186.81<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
+          <tr class="extra-row" data-date="2027-01-15" data-rent="18750"><td><strong>Farmacia</strong><small>Cerritos</small></td><td>15/01/2027</td><td>$18,750.00<small>sin IVA</small></td><td><span class="status pending">Pendiente</span></td></tr>
         </tbody></table></div>
         <p id="no-results" class="empty-message" hidden>No se encontraron contratos.</p>
       </section>
@@ -54,8 +54,8 @@
       <div class="contract-form-body">
         <div class="form-row"><label>Identificador del contrato<input name="contractId" placeholder="Ej. CTR-2026-001" required></label><label>Local o contrato<input name="contract" placeholder="Ej. Rico’s" required></label></div>
         <div class="form-row"><label>Inquilino<input name="tenant" placeholder="Razón social o nombre comercial" required></label><label>Estación<select name="station" id="contract-station" required><option value="">Seleccionar estación</option></select></label></div>
-        <div class="form-row"><label>Fecha de inicio<input name="startDate" id="contract-start-date" type="date" required></label><label>Duración (meses)<input name="duration" id="contract-duration" type="number" min="1" max="360" step="1" placeholder="Ej. 60" required></label></div>
-        <div class="form-row"><label>Fecha de vencimiento<input name="date" id="contract-end-date" type="date" readonly required></label><label>Renta mensual sin IVA<input name="rent" type="number" min="0" step="0.01" placeholder="0.00" required></label></div>
+        <div class="form-row"><label>Fecha de inicio<input name="startDate" id="contract-start-date" type="text" placeholder="DD/MM/AAAA" inputmode="numeric" maxlength="10" required></label><label>Duración (meses)<input name="duration" id="contract-duration" type="number" min="1" max="360" step="1" placeholder="Ej. 60" required></label></div>
+        <div class="form-row"><label>Fecha de vencimiento<input name="date" id="contract-end-date" type="text" placeholder="DD/MM/AAAA" inputmode="numeric" maxlength="10" readonly required></label><label>Renta mensual sin IVA<input name="rent" type="number" min="0" step="0.01" placeholder="0.00" required></label></div>
         <label class="contract-pdf-field"><span>Contrato en PDF</span><input name="contractPdf" id="contract-pdf" type="file" accept="application/pdf,.pdf" required><span class="contract-pdf-button"><span class="material-symbols-outlined">upload_file</span><b>Subir PDF del contrato</b><small id="contract-pdf-name">Ningún archivo seleccionado</small></span></label>
       </div>
       <div class="dialog-actions"><button type="button" data-close-dialog class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Guardar contrato</button></div>
@@ -66,16 +66,20 @@
       <div class="dialog-heading"><div><small>ACTUALIZACIÓN CONTRACTUAL</small><h2>Registrar incremento de renta</h2><p id="rent-increase-contract"></p></div><button type="button" data-close-increase class="icon-button" aria-label="Cerrar"><span class="material-symbols-outlined">close</span></button></div>
       <div class="rent-increase-body">
         <div class="rent-increase-current"><span class="material-symbols-outlined">payments</span><div><small>Monto anterior</small><strong id="rent-increase-previous"></strong></div></div>
-        <label><span>Índice INPC</span><input name="inpc" type="number" min="0" step="0.0001" placeholder="Ej. 145.1690" required><small>Captura el valor publicado del índice con cuatro decimales.</small></label>
-        <label><span>Monto nuevo (MXN)</span><input name="newAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
-        <label><span>Fecha de ajuste</span><input name="adjustmentDate" type="date" readonly required><small>Corresponde al día en que se capturan los datos.</small></label>
-        <div class="rent-increase-preview"><small>Variación de la renta</small><strong id="rent-increase-variation">0.00%</strong></div>
+        <fieldset class="inpc-group"><legend>INPC anterior</legend><label><span>Valor del índice anterior</span><input name="inpcPrevious" type="number" min="0.0001" step="0.0001" placeholder="0.0000" required></label><div class="inpc-period"><label>Mes<select name="previousMonth" required></select></label><label>Año<input name="previousYear" type="number" min="1900" step="1" required></label></div></fieldset>
+        <fieldset class="inpc-group"><legend>INPC actual</legend><label><span>Valor del índice actual</span><input name="inpcCurrent" type="number" min="0.0001" step="0.0001" placeholder="0.0000" required></label><div class="inpc-period"><label>Mes<select name="currentMonth" required></select></label><label>Año<input name="currentYear" type="number" min="1900" step="1" required></label></div></fieldset>
+        <p class="inpc-formula">Nueva renta = monto anterior × (INPC actual ÷ INPC anterior). Captura ambos índices publicados con la misma base.</p>
+        <div class="rent-increase-current rent-increase-new"><span class="material-symbols-outlined">calculate</span><div><small>Monto nuevo calculado (MXN)</small><strong id="rent-increase-new" aria-live="polite">—</strong><input name="newAmount" type="hidden"></div></div>
+        <label class="inpc-adjustment"><span>Fecha de ajuste</span><input name="adjustmentDate" type="text" placeholder="DD/MM/AAAA" readonly required><small>Día en que se capturan los datos.</small></label>
+        <div class="rent-increase-preview"><small>Variación de la renta</small><strong id="rent-increase-variation" aria-live="polite">—</strong></div>
+        <p id="rent-increase-error" role="alert" hidden></p>
       </div>
       <div class="dialog-actions"><button type="button" data-close-increase class="secondary-button">Cancelar</button><button class="primary-button" type="submit"><span class="material-symbols-outlined">task_alt</span>Guardar y marcar como Hecho</button></div>
     </form>
   </dialog>
   <div id="toast" role="status" aria-live="polite"></div>
   <script src="/navigation.js?v=20260921-fast-navigation"></script>
-  <script src="/alerts-dashboard.js?v=20260901-dynamic-increase-status"></script>
+  <script src="/rent-increase-model.js?v=20260922-inpc"></script>
+<script src="/alerts-dashboard.js?v=20260922-inpc"></script>
 </body>
 </html>

@@ -185,3 +185,20 @@ body.alerts-page .contracts-card .table-wrap{
   .show-all{display:flex !important;flex:0 0 34px !important;min-height:34px !important;margin:6px auto 0 !important}
 }
 body.alerts-page .contracts-card .show-all{display:none!important}body.alerts-page .contracts-card .table-wrap{overflow-y:auto!important}body.alerts-page .contracts-card tbody tr.extra-row{display:table-row}
+.rent-increase-dialog{width:min(700px,calc(100vw - 28px));max-height:94dvh;overflow:auto}
+.rent-increase-body .inpc-group{min-width:0;margin:0;padding:13px;border:1px solid #cfdeea;border-radius:11px}
+.rent-increase-body .inpc-group legend{padding:0 5px;font-size:15px;font-weight:800;color:#166fa8}
+.rent-increase-body .inpc-period{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px;margin-top:12px}
+.rent-increase-body .inpc-period label,.rent-increase-body .inpc-group label{display:grid;gap:6px;grid-column:auto!important;font-size:12px}
+.rent-increase-body .inpc-period select,.rent-increase-body .inpc-period input{width:100%;min-width:0;height:42px}
+.rent-increase-body .inpc-formula{grid-column:1/-1;margin:0;color:#62748a;font-size:12px;line-height:1.5}
+.rent-increase-body .rent-increase-new{color:#075f48;background:#e4f6ed}
+.rent-increase-body .rent-increase-current strong{font-size:26px}
+.rent-increase-body .inpc-adjustment{grid-column:1/-1}
+.rent-increase-body #rent-increase-error{grid-column:1/-1;margin:0;color:#b42335;font-size:13px}
+.rent-increase-dialog button:disabled{opacity:.5;cursor:not-allowed}
+html.rp-dark .rent-increase-body .inpc-group{border-color:#42536d}
+html.rp-dark .rent-increase-body .inpc-group legend{color:#78cef2}
+html.rp-dark .rent-increase-body .inpc-period select{color:#e8eef7;border-color:#42536d;background:#202e45}
+html.rp-dark .rent-increase-body .inpc-formula{color:#b8c7d9}
+html.rp-dark .rent-increase-body .rent-increase-new{background:#163f3c;color:#91e9c6}
