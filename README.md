@@ -1,5 +1,7 @@
 # Asset-Management
 
+Inicio ordena las actividades por pendiente/completada, prioridad y fecha; las conserva en `rp-home-activities`. `home-data.js` reúne los vencimientos iniciales y las fichas guardadas (`rp-local-detail:*`), usando días de calendario locales, con renovación al recuperar foco y cada minuto. Las tarjetas de vencimientos y expedientes abren el detalle de sus listas; los expedientes pendientes corresponden a actividades de tipo Expediente no completadas. `?view=table` fuerza la vista de tabla del Directorio. Verificar con `node tests/home-links.cjs`.
+
 El botón **Descargar PDF** del cálculo de renta genera directamente `Calculo Renta-<local>.pdf`, en una hoja carta. La descarga conserva el diseño como imagen de alta resolución, con logo y fuente incorporados. `node tests/rent-download.cjs` verifica el nombre, la descarga sin impresión y el tamaño de página; admite `CHECK_BASE` para probar Vercel.
 
 Sitio estático. Para servirlo localmente en Windows: `powershell -ExecutionPolicy Bypass -File serve.ps1` y abrir `http://localhost:8000`.

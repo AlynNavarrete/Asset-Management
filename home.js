@@ -2,6 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const main = document.querySelector('.rp-page-content main');
   if (!main) return;
   document.body.classList.add('home-page');
+  const model=window.rpHomeData;
+  const safe=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const activityKey='rp-home-activities';
+  const defaults=[
+    {id:'renewal-rico',title:"Revisar renovación de Rico's",station:'La Marina',localId:'L-01',city:'Mazatlán',type:'Contrato',date:'2026-08-15',priority:'high'},
+    {id:'increase-bike',title:'Aplicar incremento de Bike Line',station:'La Marina',type:'Incremento',date:'2026-09-10',priority:'medium'},
+    {id:'file-marina',title:'Completar expediente de Farmacia Marina',station:'La Marina',type:'Expediente',date:'',description:'Documento fiscal pendiente',priority:'high'},
+    {id:'photos-habas',title:'Actualizar fotografías de Local Habas',station:'Las Habas',type:'Vacancia',date:'2026-08-09',priority:'low',complete:true}
+  ];
+  let activitiesData=model.read(activityKey,defaults);
+  if(!Array.isArray(activitiesData))activitiesData=defaults;
+  const persist=()=>{try{localStorage.setItem(activityKey,JSON.stringify(activitiesData));return true;}catch{notify('No se pudo guardar la actividad en este navegador.');return false;}};
+  const formatDate=value=>Number.isFinite(model.day(value))?new Date(value+'T00:00:00Z').toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}):'Sin fecha límite';
+  const taskHref=item=>item.localId?model.localHref(item):'/Estacion/code.html?'+new URLSearchParams({station:item.station,city:item.city||''}).toString();
   const now = new Date();
   const hour = now.getHours();
   const greeting = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
@@ -55,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !activityModal.hidden) closeActivityModal(); });
   const navigate = (element, href, label) => {
     element.classList.add('home-clickable'); element.tabIndex=0; element.setAttribute('role','link'); element.setAttribute('aria-label',label);
-    const open=()=>window.location.href=href; element.addEventListener('click',open); element.addEventListener('keydown',(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();open();}});
+    const open=event=>{if(event.target!==element&&event.target.closest('button,a,input,select,textarea'))return;if(event.type==='keydown'&&event.target!==element)return;event.preventDefault();window.location.href=href;}; element.addEventListener('click',open); element.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' ')open(event);});
   };
 
   const routes = {
@@ -68,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   main.querySelectorAll('p').forEach((label)=>{const text=label.textContent.trim();if(routes[text]){const card=label.closest('.rounded-xl');if(card){card.classList.add('home-kpi-card');card.parentElement?.classList.add('home-kpi-grid');navigate(card,routes[text],`Ver detalle de ${text}`);}}});
 
   const vacancyTitle=[...main.querySelectorAll('h3')].find((heading)=>heading.textContent.includes('Indicador de Vacancias'));
-  const vacancyCard=vacancyTitle?.closest('.home-vacancy-card'); if(vacancyCard) navigate(vacancyCard,'/Admin%20Vacantes/code.html','Ver administración de vacantes');
+  const vacancyCard=vacancyTitle?.closest('.home-vacancy-card'); if(vacancyCard) navigate(vacancyCard,'/Admin%20Vacantes/code.html?view=available','Ver locales disponibles');
   const buttons=[...main.querySelectorAll('button')];
   buttons.find((button)=>button.textContent.includes('Ver todas'))?.addEventListener('click',()=>window.location.href='/Calendario%20y%20Alertas/code.html');
   buttons.find((button)=>button.textContent.includes('Nuevo Tr'))?.addEventListener('click',()=>window.location.href='/Admin%20Vacantes/code.html');
@@ -82,25 +96,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const activityPanel = [...main.querySelectorAll('h3')].find((heading) => heading.textContent.includes('Actividades Pendientes'))?.closest('.rounded-xl');
   const activityBody = activityPanel?.querySelector('tbody');
-  if (activityBody) activityBody.innerHTML = `
-    <tr><td><button class="home-task-check" type="button" aria-label="Marcar actividad como completada"></button></td><td><strong>Revisar renovación de Rico's</strong><small>La Marina · fecha límite 15 ago 2026</small></td><td><span class="home-priority high">Alta</span></td></tr>
-    <tr><td><button class="home-task-check" type="button" aria-label="Marcar actividad como completada"></button></td><td><strong>Aplicar incremento de Bike Line</strong><small>La Marina · fecha límite 10 sep 2026</small></td><td><span class="home-priority medium">Media</span></td></tr>
-    <tr><td><button class="home-task-check" type="button" aria-label="Marcar actividad como completada"></button></td><td><strong>Completar expediente de Farmacia Marina</strong><small>Documento fiscal pendiente</small></td><td><span class="home-priority high">Alta</span></td></tr>
-    <tr class="home-task-complete"><td><button class="home-task-check is-checked" type="button" aria-label="Marcar actividad como pendiente">✓</button></td><td><strong>Actualizar fotografías de Local Habas</strong><small>Vacante · fecha límite 09 ago 2026</small></td><td><span class="home-priority low">Baja</span></td></tr>`;
+  const renderActivities=()=>{
+    if(!activityBody)return;
+    activityBody.innerHTML=model.sortActivities(activitiesData).map(item=>`<tr data-activity-id="${safe(item.id)}" class="${item.complete?'home-task-complete':''}"><td><button class="home-task-check ${item.complete?'is-checked':''}" type="button" aria-pressed="${Boolean(item.complete)}" aria-label="${item.complete?'Marcar actividad como pendiente':'Marcar actividad como completada'}">${item.complete?'✓':''}</button></td><td><strong><a href="${safe(taskHref(item))}">${safe(item.title)}</a></strong><small>${safe(item.station)} · ${item.date?'fecha límite '+formatDate(item.date):safe(item.description||'Sin fecha límite')}</small></td><td><span class="home-priority ${['high','medium','low'].includes(item.priority)?item.priority:'low'}">${({high:'Alta',medium:'Media',low:'Baja'})[item.priority]||'Baja'}</span></td></tr>`).join('');
+  };
   activityPanel?.querySelector('thead')?.remove();
-
-  const expiryPanel = [...main.querySelectorAll('h3')].find((heading) => heading.textContent.includes('Contratos Pr'))?.closest('.rounded-xl');
-  const expiryBody = expiryPanel?.querySelector('tbody');
-  if (expiryBody) expiryBody.innerHTML = `
-    <tr><td><strong>Rico's</strong><small>La Marina · 01 oct 2026</small></td><td><b>56 días</b></td></tr>
-    <tr><td><strong>OXXO Revolución</strong><small>Revolución · 31 dic 2026</small></td><td><b>147 días</b></td></tr>`;
+  activityBody?.addEventListener('click',event=>{
+    const button=event.target.closest('.home-task-check');if(!button)return;
+    const item=activitiesData.find(item=>item.id===button.closest('tr').dataset.activityId);if(!item)return;
+    item.complete=!item.complete;persist();renderActivities();refreshHome();
+    activityBody.querySelector(`[data-activity-id="${CSS.escape(item.id)}"] button`)?.focus({preventScroll:true});
+  });
+  renderActivities();
+  const expiryPanel=[...main.querySelectorAll('h3')].find(heading=>heading.textContent.includes('Contratos Pr'))?.closest('.rounded-xl');
+  const expiryBody=expiryPanel?.querySelector('tbody');
   expiryPanel?.querySelector('thead')?.remove();
-
-  document.querySelectorAll('.home-task-check').forEach((button) => button.addEventListener('click', (event) => {
-    event.stopPropagation(); const row = button.closest('tr'); const complete = row.classList.toggle('home-task-complete');
-    button.classList.toggle('is-checked', complete); button.textContent = complete ? '✓' : '';
-  }));
-  main.querySelectorAll('tbody tr').forEach((row)=>navigate(row,'/Detalle%20del%20Local/code.html','Abrir información detallada'));
+  const expiryRow=item=>`<tr><td><a href="${safe(model.localHref(item))}"><strong>${safe(item.commercialName||item.localId)}</strong><small>${safe(item.station)} · ${formatDate(item.endDate)}</small></a></td><td><b>${item.days===0?'Vence hoy':item.days===1?'1 día':item.days+' días'}</b></td></tr>`;
+  const details=document.createElement('dialog');details.id='home-detail-dialog';document.body.appendChild(details);
+  const openDetails=kind=>{
+    const expiries=kind==='expiry',items=expiries?model.upcoming():model.sortActivities(activitiesData.filter(item=>item.type==='Expediente'&&!item.complete));
+    details.innerHTML=`<header><h2>${expiries?'Contratos en próximos 180 días':'Expedientes incompletos'}</h2><button type="button" aria-label="Cerrar">×</button></header>${expiries?'':'<p>Actividades de expediente pendientes de completar. Abre la estación para consultar sus locales.</p>'}<table><tbody>${items.length?items.map(item=>expiries?expiryRow(item):`<tr><td><a href="${safe(taskHref(item))}"><strong>${safe(item.title)}</strong><small>${safe(item.station)} · ${safe(item.description||'Seguimiento pendiente')}</small></a></td></tr>`).join(''):'<tr><td>No hay pendientes en esta sección.</td></tr>'}</tbody></table>`;
+    details.querySelector('button').onclick=()=>details.close();details.showModal();
+  };
+  details.addEventListener('click',event=>{if(event.target===details)details.close();});
+  const refreshHome=()=>{
+    const items=model.upcoming();
+    if(expiryBody)expiryBody.innerHTML=items.slice(0,2).map(expiryRow).join('')||'<tr><td>No hay contratos por vencer en los próximos 180 días.</td></tr>';
+    const count=main.querySelector('[data-summary-kind="expiry"] strong');if(count)count.textContent=items.length;
+    const incomplete=main.querySelector('[data-summary-kind="documents"] strong');if(incomplete)incomplete.textContent=activitiesData.filter(item=>item.type==='Expediente'&&!item.complete).length;
+  };
 
   const layout = main.querySelector('.home-main-grid');
   const leftColumn = layout?.children[0];
@@ -135,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (oldExpiryButton) {
       const allButton = document.createElement('button');
       allButton.type = 'button'; allButton.className = 'home-see-all'; allButton.textContent = 'Ver todos →';
-      allButton.addEventListener('click', () => window.location.href = '/Calendario%20y%20Alertas/code.html');
+      allButton.addEventListener('click', () => openDetails('expiry'));
       oldExpiryButton.replaceWith(allButton);
     }
     const vacancyHeading = vacancyCard.querySelector('h3');
@@ -147,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const legendGroups = vacancyCard.querySelectorAll(':scope > div:nth-of-type(2) > div');
     if (legendGroups[0]) legendGroups[0].innerHTML = '<div class="w-3 h-3 rounded-full bg-primary"></div><div><p class="font-semibold text-on-background">11 rentados</p><p class="text-on-surface-variant text-xs">79% del portafolio</p></div>';
     if (legendGroups[1]) legendGroups[1].innerHTML = '<div class="w-3 h-3 rounded-full bg-[#29a9df]"></div><div><p class="font-semibold text-on-background">3 disponibles</p><p class="text-on-surface-variant text-xs">21% del portafolio</p></div>';
+    [legendGroups[0],legendGroups[1]].forEach((group,index)=>{if(!group)return;const link=document.createElement('a');link.href=index?'/Admin%20Vacantes/code.html?view=available':'/Directorio%20de%20Estaciones/code.html?view=table';while(group.firstChild)link.appendChild(group.firstChild);group.appendChild(link);});
   }
 
   if (layout && !document.querySelector('.home-portfolio-summary')) {
@@ -155,24 +180,27 @@ document.addEventListener('DOMContentLoaded', () => {
     summary.innerHTML = `<div class="home-portfolio-heading"><h2>Resumen del Portafolio</h2><p>Información ejecutiva para administrar locales, contratos y oportunidades.</p></div>
       <div class="home-portfolio-cards">
         <article data-summary-route="/Directorio%20de%20Estaciones/code.html"><div><strong>14</strong><span>Locales administrados</span></div><i class="material-symbols-outlined">business</i></article>
-        <article data-summary-route="/Directorio%20de%20Estaciones/code.html"><div><strong>$375,037.83</strong><span>Renta mensual sin IVA</span></div><i class="material-symbols-outlined">attach_money</i></article>
-        <article data-summary-route="/Calendario%20y%20Alertas/code.html"><div><strong>2</strong><span>Contratos en próximos 180 días</span></div><i class="material-symbols-outlined">hourglass_top</i></article>
-        <article data-summary-route="/Admin%20Vacantes/code.html"><div><strong>1</strong><span>Expedientes incompletos</span></div><i class="material-symbols-outlined">priority_high</i></article>
+        <article data-summary-route="/Directorio%20de%20Estaciones/code.html?view=table"><div><strong>$375,037.83</strong><span>Renta mensual sin IVA</span></div><i class="material-symbols-outlined">attach_money</i></article>
+        <article data-summary-kind="expiry"><div><strong>2</strong><span>Contratos en próximos 180 días</span></div><i class="material-symbols-outlined">hourglass_top</i></article>
+        <article data-summary-kind="documents"><div><strong>1</strong><span>Expedientes incompletos</span></div><i class="material-symbols-outlined">priority_high</i></article>
       </div>`;
     layout.insertAdjacentElement('afterend', summary);
+    summary.querySelectorAll('[data-summary-kind]').forEach(card=>{
+      card.classList.add('home-clickable');card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Ver '+card.querySelector('span').textContent);
+      card.addEventListener('click',()=>openDetails(card.dataset.summaryKind));
+      card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetails(card.dataset.summaryKind);}});
+    });
     summary.querySelectorAll('[data-summary-route]').forEach((card) => navigate(card, card.dataset.summaryRoute, `Ver ${card.querySelector('span').textContent}`));
   }
 
-  activityModal.querySelector('#home-activity-form')?.addEventListener('submit', (event) => {
-    event.preventDefault(); const data = new FormData(event.currentTarget);
-    const priority = String(data.get('priority')); const labels = { high:'Alta', medium:'Media', low:'Baja' };
-    const dateValue = String(data.get('date'));
-    const formattedDate = new Intl.DateTimeFormat('es-MX', { day:'2-digit', month:'short', year:'numeric', timeZone:'UTC' }).format(new Date(`${dateValue}T00:00:00Z`));
-    const row = document.createElement('tr');
-    row.innerHTML = `<td><button class="home-task-check" type="button" aria-label="Marcar actividad como completada"></button></td><td><strong></strong><small></small></td><td><span class="home-priority ${priority}">${labels[priority]}</span></td>`;
-    row.querySelector('strong').textContent = String(data.get('title')).trim();
-    row.querySelector('small').textContent = `${data.get('station')} · fecha límite ${formattedDate}`;
-    row.querySelector('.home-task-check').addEventListener('click', (clickEvent) => { clickEvent.stopPropagation(); const complete = row.classList.toggle('home-task-complete'); clickEvent.currentTarget.classList.toggle('is-checked', complete); clickEvent.currentTarget.textContent = complete ? '✓' : ''; });
-    activityBody?.prepend(row); event.currentTarget.reset(); closeActivityModal(); notify('Actividad creada correctamente.');
+  refreshHome();
+  const refresh=()=>{const saved=model.read(activityKey,activitiesData);if(Array.isArray(saved))activitiesData=saved;renderActivities();refreshHome();};
+  window.addEventListener('storage',refresh);window.addEventListener('pageshow',refresh);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+  setInterval(()=>{if(!document.hidden)refreshHome();},60000);
+  activityModal.querySelector('#home-activity-form')?.addEventListener('submit',event=>{
+    event.preventDefault();const data=Object.fromEntries(new FormData(event.currentTarget));
+    activitiesData.push({...data,id:crypto.randomUUID(),complete:false});
+    persist();renderActivities();refreshHome();event.currentTarget.reset();closeActivityModal();notify('Actividad creada correctamente.');
   });
 });

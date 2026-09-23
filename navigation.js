@@ -401,7 +401,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     gridButton?.addEventListener('click', () => setStationView('grid'));
     tableButton?.addEventListener('click', () => setStationView('table'));
-    if (grid && tableContainer) setStationView(localStorage.getItem('rp-stations-view') || 'grid');
+    const requestedStationView = new URLSearchParams(location.search).get('view');
+    if (grid && tableContainer) setStationView(['grid','table'].includes(requestedStationView)?requestedStationView:(localStorage.getItem('rp-stations-view') || 'grid'));
 
     const searchInput = document.getElementById('station-search');
     const cityFilter = document.getElementById('station-city-filter');
