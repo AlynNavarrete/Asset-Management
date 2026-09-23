@@ -64,6 +64,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const content = document.body.firstElementChild;
   if (content) content.classList.add('rp-page-content');
   document.body.insertBefore(sidebar, content);
+  const menuToggle=document.createElement('button');
+  menuToggle.id='rp-menu-toggle';menuToggle.type='button';menuToggle.setAttribute('aria-label','Abrir menú');menuToggle.setAttribute('aria-controls','rp-sidebar');menuToggle.setAttribute('aria-expanded','false');menuToggle.innerHTML='<span class="material-symbols-outlined">menu</span>';
+  const backdrop=document.createElement('button');backdrop.id='rp-menu-backdrop';backdrop.type='button';backdrop.tabIndex=-1;backdrop.setAttribute('aria-label','Cerrar menú');
+  document.body.append(menuToggle,backdrop);
+  const mobileMenu=matchMedia('(max-width:1050px)');
+  const setMenu=open=>{document.body.classList.toggle('rp-menu-open',open);menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú');sidebar.inert=mobileMenu.matches&&!open;menuToggle.querySelector('span').textContent=open?'close':'menu';};
+  menuToggle.addEventListener('click',()=>setMenu(!document.body.classList.contains('rp-menu-open')));
+  backdrop.addEventListener('click',()=>{setMenu(false);menuToggle.focus();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('rp-menu-open')){setMenu(false);menuToggle.focus();}});
+  mobileMenu.addEventListener('change',()=>setMenu(false));setMenu(false);
+  // Contain wide tables without shrinking their text or changing the report paper.
+  document.querySelectorAll('.rp-page-content table').forEach(table=>{if(table.closest('dialog,.overflow-x-auto,.table-wrap,.expiry-table-wrap'))return;const wrap=document.createElement('div');wrap.className='rp-table-scroll';wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Tabla desplazable');table.before(wrap);wrap.append(table);});
 
   sidebar.querySelector('[data-action="logout"]').addEventListener('click', (event) => {
     event.preventDefault();
