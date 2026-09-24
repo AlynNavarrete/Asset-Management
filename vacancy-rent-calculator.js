@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
       await window.rpLoadRentPdf();
       const [logo,font]=await window.rpRentPdfArtwork();
-      const canvas=await window.html2canvas(paper,{scale:3,backgroundColor:'#ffffff',foreignObjectRendering:true,logging:false,
+      const canvas=await window.html2canvas(paper,{width:816,height:1056,scale:3,backgroundColor:'#ffffff',foreignObjectRendering:true,logging:false,
         onclone:document=>{
           const copy=document.querySelector('.rent-report-paper');
           // Capture the whole sheet independently of the editor's scroll position and modal clipping.
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded',()=>{
           const fonts=document.createElement('style');
           fonts.textContent=`@font-face{font-family:Inter;font-style:normal;font-weight:400 800;src:url(${font}) format('woff2')}`;
           copy.prepend(fonts);
-          copy.style.cssText+=';position:fixed;left:0;top:0;margin:0;z-index:2147483647;box-shadow:none';
+          copy.style.cssText+=';transform:none!important;position:fixed;left:0;top:0;margin:0;z-index:2147483647;box-shadow:none';
           document.querySelector('#rent-calculation-dialog')?.remove();
         }});
       const pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'pt',format:'letter',compress:true});

@@ -888,6 +888,9 @@ select {
 .cursor-pointer {
   cursor: pointer;
 }
+.resize {
+  resize: both;
+}
 .appearance-none {
   appearance: none;
 }

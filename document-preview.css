@@ -1,0 +1,36 @@
+﻿.rp-pdf-viewer{display:flex;flex-direction:column;min-height:0;overflow:hidden;background:#dfe6ef;color:#18314d}
+.rp-document-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px;flex:0 0 auto;background:#eaf1f9;color:#18314d;position:sticky;left:0;top:0;z-index:4;font:13px Inter,Arial,sans-serif}
+.rp-document-tools button{min-width:40px;min-height:40px;border:1px solid #bccde0;border-radius:7px;padding:6px 10px;background:white;color:#164876;font:inherit;cursor:pointer}
+.rp-document-tools button:disabled{opacity:.4;cursor:default}
+.rp-pdf-scroll{overflow:auto;min-height:0;flex:1;padding:12px;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;box-sizing:border-box}
+.rp-pdf-scroll canvas{display:block;background:white;box-shadow:0 2px 12px #10243e30;margin:0 auto;max-width:none}
+.rp-pdf-error{padding:14px;font-size:14px}
+.rp-paper-stage{position:relative;margin:12px auto;flex:none;overflow:hidden}
+.rp-paper-stage>.rent-report-paper,.rp-paper-stage>.proposal-preview-paper,.rp-paper-stage>.approved-history-paper{margin:0!important;max-width:none!important;box-sizing:border-box}
+.rp-paper-stage>.proposal-preview-paper{width:760px!important;min-width:760px!important}
+.rp-paper-stage>.approved-history-paper{width:794px!important;min-width:794px!important}
+.rp-paper-stage .proposal-paper-columns,.rp-paper-stage .proposal-paper-signatures{grid-template-columns:1fr 1fr!important}
+.market-report-preview-panel{grid-template-rows:auto minmax(0,1fr) auto!important;min-height:0}
+#market-report-preview{overflow:hidden!important}
+@media screen and (max-width:700px){
+ .market-report-preview-panel>header,.market-report-preview-panel>footer{padding:12px;gap:10px}
+ .market-report-preview-panel h2{font-size:17px;line-height:1.35}
+ .market-report-preview-panel header button{flex:0 0 40px}
+ .market-report-preview-panel footer button{min-height:44px;font-size:14px}
+ .proposal-preview-panel{height:94dvh!important}
+ .proposal-workspace{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr)}
+ .proposal-control-panel{max-height:22dvh;overflow:auto}
+ .proposal-preview-scroll,.approved-document-scroll,#rent-report-preview{padding:10px!important;min-height:0;overflow:auto!important}
+ #approved-document-modal header{padding:12px;gap:10px;align-items:flex-start}
+ #approved-document-modal header h2{font-size:18px}
+ #approved-document-modal header p{font-size:12px}
+ #approved-document-modal header button{flex:0 0 40px}
+ #approved-document-modal footer,.proposal-preview-panel>footer{padding:10px;flex-wrap:wrap;gap:8px}
+ .local-doc-preview{padding:12px!important}.local-doc-sheet{padding:18px!important;overflow-wrap:anywhere}
+ .local-doc-sheet dl{grid-template-columns:minmax(0,1fr)!important;gap:5px!important;font-size:14px!important}.local-doc-sheet dd{margin-bottom:10px!important}
+ .local-action-panel>header{gap:10px}.local-action-panel>header>div{min-width:0}.local-action-panel>header h2{font-size:18px!important;overflow-wrap:anywhere}.local-action-panel>header button{flex:0 0 36px}
+ .local-doc-actions{flex-wrap:wrap}.local-doc-actions button{min-height:44px!important;flex:1}
+ .station-plan-viewer.rp-pdf-viewer{height:65dvh;padding:0}
+}
+@media print{.rp-document-tools{display:none!important}.rp-paper-stage{width:auto!important;height:auto!important;overflow:visible!important;margin:0!important}.rp-paper-stage>*{transform:none!important}}
+.market-report-preview-panel>header{color:#fff}.market-report-preview-panel>header h2{color:#fff!important}
