@@ -1,0 +1,32 @@
+﻿/* The local profile needs a stacked layout, not just a narrower desktop grid. */
+@media screen and (max-width:700px){
+ #local-detail-heading{display:flex;flex-direction:column;align-items:stretch;gap:18px}
+ #local-detail-heading>div{width:100%;min-width:0}
+ #local-detail-heading nav{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px 8px;line-height:1.6;font-size:13px}
+ #local-detail-heading nav>*{flex:0 0 auto;max-width:100%}
+ #local-detail-heading nav a,#local-detail-heading nav>span:last-child{white-space:normal}
+ #local-detail-heading h2{font-size:28px;line-height:1.2;margin-top:10px;overflow-wrap:break-word}
+ #local-detail-heading>div:last-child{display:flex;flex-wrap:wrap;gap:8px}
+ #local-detail-heading button{flex:1 1 140px;justify-content:center;min-height:48px;padding:10px 12px;font-size:14px;line-height:1.35;white-space:normal}
+ #local-detail-heading button .material-symbols-outlined{flex:0 0 22px;font-size:22px}
+ #local-detail-overview{flex-direction:column;padding:18px;gap:18px}
+ #local-detail-overview>div:first-child{width:100%;height:auto;aspect-ratio:4/3;max-height:290px}
+ #local-detail-overview>div:nth-child(2){width:100%;min-width:0;gap:18px}
+ #local-detail-overview>div:nth-child(2)>div:first-child>div:first-child{flex-wrap:wrap;gap:12px;align-items:flex-start;margin-bottom:14px}
+ #local-detail-overview h3{font-size:24px;line-height:1.25}
+ #local-detail-overview p{font-size:16px;line-height:1.5;overflow-wrap:break-word}
+ #local-detail-overview>div:nth-child(2)>div:first-child>div:first-child>div{flex:1 1 190px}
+ #local-detail-overview>div:nth-child(2)>div:first-child>div:first-child>span{flex:0 0 auto;white-space:nowrap;font-size:13px}
+ #local-detail-overview .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px}
+ #local-detail-overview .grid p:first-child{font-size:12px;letter-spacing:.04em}
+ #local-detail-overview .grid p:last-child{font-size:18px;font-weight:600}
+ #local-map-card{min-height:210px}
+ .rp-page-content main>.grid>div{min-width:0}
+ .rp-page-content main>.grid>div>.flex.justify-between.items-center{flex-wrap:wrap;gap:12px}
+ .rp-page-content main>.grid>div>.flex.justify-between.items-center>h3{font-size:19px;line-height:1.35}
+ #add-local-document{min-height:44px;justify-content:center;padding:10px 12px}
+}
+@media screen and (max-width:700px){
+ #local-detail-heading>div:last-child{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
+ #local-detail-heading button{width:100%;box-sizing:border-box;min-width:0}
+}
