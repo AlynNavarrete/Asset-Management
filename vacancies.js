@@ -53,9 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.replaceWith(link);
     });
     exportTable.querySelectorAll('.material-symbols-outlined').forEach((icon) => icon.remove());
-    const workbook = `<!doctype html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;color:#172033}table{border-collapse:collapse;width:100%}th{padding:11px 12px;color:#fff;background:#155e9e;border:1px solid #0d477b;text-align:left;font-weight:700}td{padding:10px 12px;border:1px solid #ccd7e4;vertical-align:middle}tbody tr:nth-child(even){background:#eef5fb}a{color:#0879bd;font-weight:700}.vacancy-status,.vacancy-priority{display:inline-block;padding:4px 8px;border-radius:10px}.available{color:#b4232f;background:#fde4e7}.promotion{color:#0968b5;background:#deedff}.prospect{color:#43536a;background:#e4ebf3}.critical{color:#c72330;font-weight:700}</style></head><body>${exportTable.outerHTML}</body></html>`;
-    const blob = new Blob([`\ufeff${workbook}`], { type:'application/vnd.ms-excel;charset=utf-8' });
-    window.rpDownloadFile(blob, `reporte-vacantes-${new Date().toISOString().slice(0,10)}.xls`);
+    window.rpExportWorkbook(exportTable, `reporte-vacantes-${new Date().toISOString().slice(0,10)}.xlsx`, 'Vacantes', document.getElementById('export-vacancies-report'));
   };
   document.getElementById('export-vacancies-report')?.addEventListener('click', exportVisibleVacancies);
 
