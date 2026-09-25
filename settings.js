@@ -50,14 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backup = snapshot();
     const stamp = backup.exportedAt.replace(/[:.]/g, '-');
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type:'application/json;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${prefix}-asset-management-${safeName(location.hostname || 'local')}-${stamp}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1200);
+    window.rpDownloadFile(blob, `${prefix}-asset-management-${safeName(location.hostname || 'local')}-${stamp}.json`);
     backupStatus.textContent = `${backup.itemCount} registros respaldados · ${new Date(backup.exportedAt).toLocaleString('es-MX')}`;
     return backup;
   };

@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formattedExpiry=model.displayDate(item.expiry);
     const safeName=`${item.contract}-${item.station}`.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'');
     const documentHtml=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Contrato ${item.contract}</title><style>body{max-width:760px;margin:48px auto;padding:0 28px;color:#172033;font:16px/1.55 Arial,sans-serif}header{padding-bottom:18px;border-bottom:3px solid #167fc7}h1{margin:0 0 5px;color:#101f78}dl{display:grid;grid-template-columns:170px 1fr;margin-top:30px}dt,dd{padding:12px;border-bottom:1px solid #dce4ee}dt{font-weight:bold}dd{margin:0}.note{margin-top:32px;padding:16px;border-radius:10px;background:#eef6fc;color:#40506a}@media(max-width:600px){body{margin:20px auto;padding:0 16px}h1{font-size:25px}dl{grid-template-columns:1fr}dt{padding-bottom:0;border:0}dd{padding-top:4px;overflow-wrap:anywhere}}</style></head><body><header><h1>Contrato de Arrendamiento</h1><div>Asset Management · RedPetroil</div></header><dl><dt>Local / contrato</dt><dd>${item.contract}</dd><dt>Estación</dt><dd>${item.station}</dd><dt>Fecha de vencimiento</dt><dd>${formattedExpiry}</dd><dt>Días restantes</dt><dd>${item.days}</dd></dl><p class="note">Documento generado desde el sistema de administración de activos.</p></body></html>`;
-    const blob=new Blob([documentHtml],{type:'text/html;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`Contrato-${safeName}.html`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);notify(`Contrato de ${item.contract} descargado.`);
+    const blob=new Blob([documentHtml],{type:'text/html;charset=utf-8'});window.rpDownloadFile(blob,`Contrato-${safeName}.html`);notify(`Contrato de ${item.contract} descargado.`);
   };
   const updateExpiryVisibility = (range) => {
     const visible=upcomingContracts.filter(item=>item.days>=0&&item.days<=Number(range));
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pdfUrl=URL.createObjectURL(pdf);
     row.innerHTML = `<td><strong></strong><small></small><button type="button" class="contract-pdf-download"><span class="material-symbols-outlined">picture_as_pdf</span>PDF</button></td><td>${model.displayDate(expiryIso)}</td><td>${rent.toLocaleString('es-MX',{style:'currency',currency:'MXN'})}<small>sin IVA</small></td><td><button type="button" class="status status-toggle pending" aria-pressed="false">Pendiente</button></td>`;
     row.querySelector('strong').textContent=data.get('contract'); row.querySelector('small').textContent=`${data.get('tenant')} · ${data.get('station')}`;
-    row.querySelector('.contract-pdf-download').addEventListener('click',()=>{const link=document.createElement('a');link.href=pdfUrl;link.download=pdf.name;link.click();});
+    row.querySelector('.contract-pdf-download').addEventListener('click',()=>{window.rpDownloadFile(pdf,pdf.name);});
     body.appendChild(row); statusByDate(row); event.currentTarget.reset(); endDateInput.value=''; pdfName.textContent='Ningún archivo seleccionado'; dialog.close(); notify(`Contrato ${data.get('contractId')} guardado con su PDF.`);
   });
 });

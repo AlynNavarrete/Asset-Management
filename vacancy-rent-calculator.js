@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       const pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'pt',format:'letter',compress:true});
       pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,612,792);
       const name=String(local).replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/g,'').trim()||'Local';
-      pdf.save(`Calculo Renta-${name}.pdf`);
+      window.rpDownloadFile(pdf.output('blob'),`Calculo Renta-${name}.pdf`);
       }catch(error){status.textContent='No se pudo descargar el PDF. Intenta nuevamente.';console.error('Error al generar el reporte PDF',error);}
       finally{button.disabled=false;button.innerHTML=original;}
     });dialog.showModal();

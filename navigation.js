@@ -394,13 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
       exportTable.querySelectorAll('.material-symbols-outlined').forEach((icon) => icon.remove());
       const workbook = `<!doctype html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;color:#172033}table{border-collapse:collapse;width:100%}th{padding:11px 14px;color:#fff;background:#155e9e;border:1px solid #0d477b;text-align:left;font-weight:700}td{padding:10px 14px;border:1px solid #ccd7e4;vertical-align:middle}tbody tr:nth-child(even){background:#eef5fb}td:nth-child(6),td:nth-child(7),th:nth-child(6),th:nth-child(7){text-align:right}strong{font-weight:700}small{display:block;color:#64748b;margin-top:2px}</style></head><body>${exportTable.outerHTML}</body></html>`;
       const blob = new Blob([`\ufeff${workbook}`], { type:'application/vnd.ms-excel;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `directorio-estaciones-${new Date().toISOString().slice(0,10)}.xls`;
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-      link.remove();
+      window.rpDownloadFile(blob, `directorio-estaciones-${new Date().toISOString().slice(0,10)}.xls`);
     });
     const setStationView = (view) => {
       const showGrid = view === 'grid';
